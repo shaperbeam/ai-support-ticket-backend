@@ -539,23 +539,25 @@ export default function Page() {
 
       <section className="content-area">
         <div className="qunexa-topbar" aria-label="Qunexa workspace header">
-          <div className="qunexa-cylinder"><span>QUNEXA</span></div>
+          <div className="qunexa-cylinder"><span>Q U N Ξ X A</span></div>
         </div>
         <div className={`dashboard-content ${catalogueBlur ? 'catalogue-blur' : ''}`}>
           {active === 'Knowledge base' ? <KnowledgeBaseView /> : active === 'WhatsApp' ? <WhatsAppView /> : active === 'E-mail' ? <EmailView /> : active === 'Website chats' ? <WebsiteChatsView /> : active === 'AI Workflow' ? <AIWorkflowView tickets={analyticsTickets} /> : active === 'Customers' ? <CustomersView /> : active === 'Inbox' ? <><InboxView tickets={analyticsTickets.filter((ticket) => Number.parseInt(ticket.confidence, 10) < confidenceThreshold)} onActionClick={setActionTicket} />{humanOverrideNotice && <div className="override-notice" role="status"><span className="override-notice-icon"><Check /></span><span><strong>Issue has been resolved with human override</strong><small>The ticket has been removed from the inbox.</small></span><button type="button" aria-label="Dismiss notification" onClick={() => setHumanOverrideNotice(false)}><X /></button></div>}{actionTicket && <ActionDialog ticket={actionTicket} threshold={confidenceThreshold} onClose={() => setActionTicket(null)} onConfirm={confirmHumanOverride} />}</> : active === 'Analytics' ? <><AnalyticsView title="Ticket analytics" tickets={analyticsTickets} onUpdate={() => undefined} onActionClick={setActionTicket} />{humanOverrideNotice && <div className="override-notice" role="status"><span className="override-notice-icon"><Check /></span><span><strong>Issue has been resolved with human override</strong><small>The ticket has been updated and routed for human review.</small></span><button type="button" aria-label="Dismiss notification" onClick={() => setHumanOverrideNotice(false)}><X /></button></div>}{actionTicket && <div className="action-dialog-backdrop" role="presentation" onMouseDown={() => setActionTicket(null)}><div className="action-dialog" role="dialog" aria-modal="true" aria-labelledby="action-dialog-title" onMouseDown={(event) => event.stopPropagation()}><button className="demo-dialog-close" type="button" aria-label="Close action details" onClick={() => setActionTicket(null)}><X /></button><p className="eyebrow">Human action</p><h3 id="action-dialog-title">{Number.parseInt(actionTicket.confidence, 10) < 90 ? 'Action required' : 'Action not required'}</h3><p className="action-dialog-message">{actionTicket.message}</p><dl className="action-dialog-details"><div><dt>Ticket</dt><dd>{actionTicket.id}</dd></div><div><dt>AI confidence</dt><dd>{actionTicket.confidence}</dd></div><div><dt>Reasoning</dt><dd>{actionTicket.reasoning}</dd></div><div><dt>Human override</dt><dd>Fix with human override</dd></div></dl><div className="action-dialog-actions"><button className="text-button" type="button" onClick={() => setActionTicket(null)}>No, keep automated</button><button className="demo-submit override-confirm" type="button" onClick={confirmHumanOverride}>Yes, fix it</button></div></div></div>}</> : active === 'All Tickets' ? <>{humanOverrideNotice && <div className="override-notice" role="status"><span className="override-notice-icon"><Check /></span><span><strong>Issue has been resolved with human override</strong><small>The ticket has been updated and routed for human review.</small></span><button type="button" aria-label="Dismiss notification" onClick={() => setHumanOverrideNotice(false)}><X /></button></div>}<TicketTable tickets={analyticsTickets} threshold={confidenceThreshold} onThresholdChange={setConfidenceThreshold} onActionClick={setActionTicket} onClearTickets={clearAllTickets} />{actionTicket && <div className="action-dialog-backdrop" role="presentation" onMouseDown={() => setActionTicket(null)}><div className="action-dialog" role="dialog" aria-modal="true" aria-labelledby="all-tickets-action-title" onMouseDown={(event) => event.stopPropagation()}><button className="demo-dialog-close" type="button" aria-label="Close action details" onClick={() => setActionTicket(null)}><X /></button><p className="eyebrow">Human action</p><h3 id="all-tickets-action-title">Action required</h3><p className="action-dialog-message">{actionTicket.message}</p><dl className="action-dialog-details"><div><dt>Ticket</dt><dd>{actionTicket.id}</dd></div><div><dt>AI confidence</dt><dd>{actionTicket.confidence}</dd></div><div><dt>Fix</dt><dd>Fix with human override</dd></div></dl><div className="action-dialog-actions"><button className="text-button" type="button" onClick={() => setActionTicket(null)}>Cancel</button><button className="demo-submit override-confirm" type="button" onClick={confirmHumanOverride}>Yes, fix it</button></div></div></div>}</> : <>
           <section className="hero-card glass-panel">
             <div className="hero-copy">
-              <h2>Every ticket,<br /><em>sorted instantly.</em></h2>
-              <p>AI classifies and routes every ticket to the right team in milliseconds.</p>
+              <h2 style={{ fontSize: '42px', fontWeight: 900, lineHeight: '1.05', letterSpacing: '-0.03em', margin: '0 0 12px', color: '#18181b' }}>
+                Every<br />conversation,<br /><span style={{ color: '#4f46e5' }}>understood.</span>
+              </h2>
+              <p style={{ color: '#64748b', fontSize: '13px', lineHeight: 1.5, margin: '0 0 20px' }}>Lucent sorts, prioritizes, and routes every incoming ticket so your team can focus on what matters.</p>
               <div className="hero-metrics" aria-label="Overview metrics">
-                <div><strong>142</strong><span>Tickets sorted</span></div>
-                <div><strong>94.6%</strong><span>AI accuracy</span></div>
-                <div><strong>14m</strong><span>Avg. response time</span></div>
+                <div><strong>5</strong><span>Tickets sorted</span></div>
+                <div><strong>94.6%</strong><span>Lucent accuracy</span></div>
+                <div><strong>14m</strong><span>Average accuracy time</span></div>
                 <button className={`demo-ticket-button hero-demo-button demo-toggle ${demoMode ? 'is-on' : ''}`} type="button" role="switch" aria-checked={demoMode} onClick={toggleDemoMode}><span className="demo-toggle-track" aria-hidden="true"><span /></span><span>{demoMode ? 'Demo mode on' : 'Demo mode off'}</span></button>
               </div>
               {demoDialogOpen && (
   <div className="demo-dialog-backdrop" role="presentation" onMouseDown={() => setDemoDialogOpen(false)}>
-    <div className="demo-dialog glass-panel" role="dialog" aria-modal="true" aria-labelledby="demo-dialog-title" style={{ width: 'min(92%, 480px)', padding: '24px' }} onMouseDown={(event) => event.stopPropagation()}>
+    <div className="demo-dialog glass-panel" role="dialog" aria-modal="true" aria-labelledby="demo-dialog-title" style={{ width: 'min(92%, 500px)', padding: '24px' }} onMouseDown={(event) => event.stopPropagation()}>
       <button className="demo-dialog-close" type="button" aria-label="Close" onClick={() => setDemoDialogOpen(false)}><X /></button>
       <p className="eyebrow" style={{ color: '#4f46e5', fontWeight: 700 }}>AI Test Suite & Dataset Selector</p>
       <h3 id="demo-dialog-title" style={{ margin: '4px 0 10px', fontSize: '22px' }}>Test Support System</h3>
@@ -593,8 +595,11 @@ export default function Page() {
       <form onSubmit={(event) => { event.preventDefault(); addDemoTicket(demoQuery) }} style={{ textAlign: 'left' }}>
         <label htmlFor="demo-query" style={{ fontSize: '11px', fontWeight: 700, color: '#475569' }}>Or Submit Single Custom Ticket</label>
         <textarea id="demo-query" value={demoQuery} onChange={(event) => setDemoQuery(event.target.value)} placeholder="e.g. Where is my latest order?" style={{ minHeight: '60px' }} />
-        <div className="demo-dialog-actions" style={{ marginTop: '10px' }}>
+        <div className="demo-dialog-actions" style={{ marginTop: '12px', display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
           <button className="text-button" type="button" onClick={() => setDemoDialogOpen(false)}>Cancel</button>
+          <button className="demo-submit" type="button" onClick={runFullDatasetTest} disabled={isLoadingDataset} style={{ background: 'linear-gradient(135deg, #4f46e5, #6366f1)', color: '#ffffff', fontWeight: 700 }}>
+            {isLoadingDataset ? '⚡ Running Test...' : '⚡ Classify & Run Entire Dataset Test'}
+          </button>
           <button className="demo-submit" type="submit" disabled={!demoQuery.trim()}>Classify Single Query</button>
         </div>
       </form>
