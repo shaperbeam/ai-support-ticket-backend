@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Store | Acme Shop</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        .hero { background: #f8f9fa; padding: 60px 0; text-align: center; }
+        .product-card { margin-bottom: 30px; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container">
+    <a class="navbar-brand" href="/">Acme Shop</a>
+    <div class="collapse navbar-collapse">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#" data-bs-toggle="modal" data-bs-target="#supportModal" onclick="resetModal()">Help & Support</a></li>
+        <li class="nav-item"><a class="nav-link" href="http://127.0.0.1:8086" target="_blank">Admin Dashboard</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="hero">
+    <div class="container">
+        <h1 class="display-4">Welcome to Acme Shop</h1>
+        <p class="lead">Showing randomly generated products from FakeStore API</p>
+    </div>
+</div>
+
+<div class="container mt-5">
+    <div class="row" id="productsContainer">
+        <div class="col-12 text-center">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading products...</span>
+            </div>
+            <p>Loading random products...</p>
+        </div>
+    </div>
+</div>
+
+<!-- Support Modal -->
+<div class="modal fade" id="supportModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Contact Support</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div id="supportAlert" class="alert d-none"></div>
+        
+        <!-- Step 1: Pre-typed FAQ Selection -->
+        <div id="faqSection">
+            <label class="form-label text-primary fw-bold">What do you need help with?</label>
+            <select class="form-select mb-3" id="issueSelect" onchange="handleIssueSelection()">
+                <optgroup label="General">
+                    <option value="">-- Select an issue --</option>
+                    <option value="other">Other / I need to contact a human</option>
+                </optgroup>
+                <optgroup label="Shipping & Delivery">
+                    <option value="shipping">Where is my order?</option>
+                    <option value="stolen">Tracking says delivered, but I don't have it.</option>
+                    <option value="cancel">I need to cancel or change my order.</option>
+                </optgroup>
+                <optgroup label="Returns & Items">
+                    <option value="returns">How do I return an item?</option>
+                    <option value="damaged">I received a damaged, defective, or wrong item.</option>
+                    <option value="missing">I'm missing an item from my package.</option>
+                    <option value="stock">When will an item be back in stock?</option>
+                </optgroup>
+                <optgroup label="Billing & Account">
+                    <option value="billing">I was charged twice.</option>
+                    <option value="promo">My promo code isn't working.</option>
+                    <option value="invoice">I need a VAT or Tax invoice.</option>
+                </optgroup>
+                <optgroup label="Technical & Website">
+                    <option value="bug">The website or checkout is crashing/broken.</option>
+                </optgroup>
+            </select>
+
+            <!-- Step 2: Immediate Automated Answer -->
+            <div id="faqAnswerBox" class="alert alert-info d-none shadow-sm">
+                <p id="faqAnswerText"></p>
+                <hr>
+                <p class="mb-2 fw-bold text-dark">Did this help resolve your issue?</p>
+                <!-- Added more dialogue options here! -->
+                <button class="btn btn-sm btn-success me-2 mb-2" onclick="resolveFaq()">Yes, my issue is resolved</button>
+                <button class="btn btn-sm btn-outline-primary me-2 mb-2" onclick="showTicketForm('standard')">No, I need to submit a ticket</button>
+                <button class="btn btn-sm btn-outline-danger mb-2" onclick="showTicketForm('escalate')">No, I want to escalate to a Manager</button>
+            </div>
+        </div>
+
+        <!-- Step 3: Actual Ticket Form (Hidden until they say "No" or select "Other") -->
+        <div id="ticketFormSection" class="d-none mt-2">
+            <label for="ticketText" class="form-label fw-bold">Send a message to our Support Team:</label>
+            <textarea class="form-control mb-2" id="ticketText" rows="6" placeholder="Describe your specific issue so we can route you to the right department..."></textarea>
+        </div>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+        <button type="button" class="btn btn-primary d-none" onclick="submitTicket()" id="submitBtn">Submit Ticket</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+// FakeStore API
+async function loadRandomProducts() {
+    try {
+        const res = await fetch('https://fakestoreapi.com/products?limit=6');
+        const products = await res.json();
+        products.sort(() => Math.random() - 0.5);
+        const container = document.getElementById('productsContainer');
+        container.innerHTML = '';
+        products.forEach(p => {
+            container.innerHTML += `
+                <div class="col-md-4 product-card">
+                    <div class="card h-100 shadow-sm">
+                        <img src="${p.image}" class="card-img-top p-4" style="height: 250px; object-fit: contain;" alt="${p.title}">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title fs-6">${p.title.substring(0, 45)}...</h5>
+                            <p class="card-text fw-bold text-success">$${p.price.toFixed(2)}</p>
+                            <button class="btn btn-outline-primary mt-auto">Add to Cart</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+        });
+    } catch (e) {
+        document.getElementById('productsContainer').innerHTML = '<p class="text-danger text-center">Failed to load products.</p>';
+    }
+}
+document.addEventListener('DOMContentLoaded', loadRandomProducts);
+
+// Automated Answers Database
+const faqAnswers = {
+    "shipping": "Standard orders typically ship within 1-2 business days. Tracking numbers take 24 hours to update after you receive the shipping confirmation email.",
+    "stolen": "Sometimes carriers scan packages as 'delivered' slightly early. Please wait 24 hours and check around your porch. If it still hasn't arrived, please contact support below.",
+    "cancel": "Orders can only be modified or cancelled within 1 hour of placement. You can manage this from your 'My Account -> Orders' page. If it has been longer than an hour, the order has likely already entered processing.",
+    "returns": "We offer a hassle-free 30-day return policy! You can print a free return shipping label directly from your Order History page.",
+    "damaged": "We're so sorry about that! Please take a clear photo of the damaged/wrong item and contact our support team below for a rapid replacement or refund.",
+    "missing": "If an item is missing, it may be shipping separately. Please check your email for multiple tracking numbers. If you only received one tracking number, please contact support.",
+    "stock": "We typically restock popular items within 2-3 weeks. You can sign up for email restock notifications directly on the product's page!",
+    "promo": "Promo codes can be applied on the final checkout screen. Please note that you cannot stack multiple promo codes on a single order, and they cannot be applied to already discounted items.",
+    "billing": "If you see a double charge on your statement, one is usually a 'pending authorization' that drops off automatically within 3-5 business days.",
+    "invoice": "Invoices are automatically emailed to you within 24 hours of purchase. You can also download them as a PDF directly from your Order History tab.",
+    "bug": "We are sorry you are experiencing website issues. Please try clearing your cache. If the issue persists, contact us so our engineering team can investigate."
+};
+
+// HIGHLY POLARIZED KEYWORD TEMPLATES FOR MACHINE LEARNING
+const ticketTemplates = {
+    "shipping": "CATEGORY: ORDER STATUS & SHIPPING\nISSUE: Delivery delayed, tracking number not updating, package transit inquiry.\n\nAdditional Details:\n",
+    "stolen": "CATEGORY: ORDER STATUS & SHIPPING\nISSUE: Lost package claim, carrier marked as delivered but missing, stolen merchandise.\n\nAdditional Details:\n",
+    "cancel": "CATEGORY: ORDER STATUS & SHIPPING\nISSUE: Cancel order, stop fulfillment, change delivery address before dispatch.\n\nAdditional Details:\n",
+    "returns": "CATEGORY: RETURNS & EXCHANGES\nISSUE: Need RMA, request refund, print return shipping label, sending item back.\n\nAdditional Details:\n",
+    "damaged": "CATEGORY: RETURNS & EXCHANGES\nISSUE: Damaged product, defective item received, exchange for replacement, wrong size sent.\n\nAdditional Details:\n",
+    "missing": "CATEGORY: RETURNS & EXCHANGES\nISSUE: Missing inventory from box, incomplete shipment received, part of order missing.\n\nAdditional Details:\n",
+    "stock": "CATEGORY: PRODUCT INQUIRIES\nISSUE: Stock availability, restock timeline, product specifications, inventory check.\n\nAdditional Details:\n",
+    "billing": "CATEGORY: BILLING & PAYMENTS\nISSUE: Double charge on credit card, overcharged amount, request immediate financial refund, payment error.\n\nAdditional Details:\n",
+    "promo": "CATEGORY: PROMOTIONS & DISCOUNTS\nISSUE: Coupon code broken, discount not applying at checkout, gift card balance.\n\nAdditional Details:\n",
+    "invoice": "CATEGORY: BILLING & PAYMENTS\nISSUE: Requesting formal VAT tax invoice, PDF receipt for accounting, transaction history.\n\nAdditional Details:\n",
+    "bug": "CATEGORY: TECHNICAL ISSUES\nISSUE: Website 500 error, app crash, checkout page broken, payment gateway failure.\n\nAdditional Details:\n"
+};
+
+function resetModal() {
+    document.getElementById('issueSelect').value = "";
+    document.getElementById('faqAnswerBox').classList.add('d-none');
+    document.getElementById('ticketFormSection').classList.add('d-none');
+    document.getElementById('submitBtn').classList.add('d-none');
+    document.getElementById('supportAlert').classList.add('d-none');
+}
+
+function handleIssueSelection() {
+    const select = document.getElementById('issueSelect').value;
+    const answerBox = document.getElementById('faqAnswerBox');
+    const ticketForm = document.getElementById('ticketFormSection');
+    const submitBtn = document.getElementById('submitBtn');
+    const answerText = document.getElementById('faqAnswerText');
+
+    document.getElementById('supportAlert').classList.add('d-none');
+
+    // Reset Answer Box state in case it was previously marked successful
+    answerBox.classList.add('alert-info');
+    answerBox.classList.remove('alert-success');
+    answerBox.innerHTML = `
+        <p id="faqAnswerText"></p>
+        <hr>
+        <p class="mb-2 fw-bold text-dark">Did this help resolve your issue?</p>
+        <button class="btn btn-sm btn-success me-2 mb-2" onclick="resolveFaq()">Yes, my issue is resolved</button>
+        <button class="btn btn-sm btn-outline-primary me-2 mb-2" onclick="showTicketForm('standard')">No, I need to submit a ticket</button>
+        <button class="btn btn-sm btn-outline-danger mb-2" onclick="showTicketForm('escalate')">No, I want to escalate to a Manager</button>
+    `;
+
+    if (select === "") {
+        answerBox.classList.add('d-none');
+        ticketForm.classList.add('d-none');
+        submitBtn.classList.add('d-none');
+    } else if (select === "other") {
+        answerBox.classList.add('d-none');
+        showTicketForm('standard');
+    } else {
+        document.getElementById('faqAnswerText').innerText = faqAnswers[select];
+        answerBox.classList.remove('d-none');
+        ticketForm.classList.add('d-none');
+        submitBtn.classList.add('d-none');
+    }
+}
+
+function resolveFaq() {
+    const answerBox = document.getElementById('faqAnswerBox');
+    answerBox.innerHTML = "<strong>Great! We're glad we could help. You can close this window.</strong>";
+    answerBox.classList.remove('alert-info');
+    answerBox.classList.add('alert-success');
+}
+
+function showTicketForm(type) {
+    document.getElementById('faqAnswerBox').classList.add('d-none');
+    document.getElementById('ticketFormSection').classList.remove('d-none');
+    
+    const selectValue = document.getElementById('issueSelect').value;
+    
+    // Get the highly polarized template, or default to general
+    let template = ticketTemplates[selectValue] || "GENERAL INQUIRY:\nI need to speak to human support regarding a general issue.\n\nAdditional Details:\n";
+    
+    // Add escalation keyword if they clicked the Manager button
+    if (type === 'escalate') {
+        template = "🚨 CRITICAL ESCALATION 🚨\nCUSTOMER REQUESTED IMMEDIATE MANAGER REVIEW\n\n" + template;
+    }
+    
+    document.getElementById('ticketText').value = template;
+    document.getElementById('submitBtn').classList.remove('d-none');
+}
+
+async function submitTicket() {
+    const text = document.getElementById('ticketText').value;
+    const btn = document.getElementById('submitBtn');
+    const alertBox = document.getElementById('supportAlert');
+    
+    if(!text) return;
+    
+    btn.disabled = true;
+    btn.innerText = "Classifying & Submitting...";
+    alertBox.className = "alert d-none";
+    
+    try {
+        const response = await fetch('/api/tickets', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({ customer_message: text })
+        });
+        
+        if (response.ok) {
+            const data = await response.json();
+            alertBox.className = "alert alert-success mt-3";
+            alertBox.innerHTML = `<strong>Ticket submitted successfully!</strong><br>
+                                  Auto-routed to: <b>${data.department}</b><br>
+                                  AI Priority: <b>${data.priority}</b>`;
+            document.getElementById('ticketFormSection').classList.add('d-none');
+            btn.classList.add('d-none');
+        } else {
+            const error = await response.json();
+            alertBox.className = "alert alert-danger mt-3";
+            alertBox.innerText = `Error: ${error.detail || 'Failed to submit'}`;
+        }
+    } catch (err) {
+        alertBox.className = "alert alert-danger mt-3";
+        alertBox.innerText = "Network Error.";
+    }
+    
+    btn.disabled = false;
+    btn.innerText = "Submit Ticket";
+    alertBox.classList.remove('d-none');
+}
+</script>
+</body>
+</html>

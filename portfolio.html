@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Showcase | AI Ticket System</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background-color: #f4f6f9; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; }
+        .showcase-header { 
+            background: linear-gradient(135deg, #1e3c72 0%, #2a5298 100%); 
+            color: white; 
+            padding: 80px 0; 
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        .card { 
+            border-radius: 12px; 
+            border: none; 
+            box-shadow: 0 6px 15px rgba(0,0,0,0.05); 
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .card:hover { 
+            transform: translateY(-5px); 
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .btn-launch { font-weight: bold; border-radius: 8px; padding: 10px 25px; }
+        .feature-icon { font-size: 2.5rem; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+    <div class="showcase-header text-center mb-5">
+        <div class="container">
+            <h1 class="display-4 fw-bold mb-3">AI-Powered Support Ticket System</h1>
+            <p class="lead opacity-75">A full-stack, split-architecture microservices demo featuring local Machine Learning classification.</p>
+        </div>
+    </div>
+    
+    <div class="container">
+        <!-- Architecture Features -->
+        <div class="row text-center mb-5 g-4">
+            <div class="col-md-4">
+                <div class="card p-4 h-100">
+                    <div class="feature-icon">⚡</div>
+                    <h4 class="text-primary">Instant ML Routing</h4>
+                    <p class="text-muted">Uses a highly trained local Scikit-Learn TF-IDF pipeline to instantly categorize incoming support tickets into 8 distinct departments.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-4 h-100">
+                    <div class="feature-icon">🏛️</div>
+                    <h4 class="text-success">Split Microservices</h4>
+                    <p class="text-muted">Strict separation of concerns. A public-facing server handles the storefront, while a private isolated server handles internal admin data.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card p-4 h-100">
+                    <div class="feature-icon">🧠</div>
+                    <h4 class="text-warning">Smart Deflection UI</h4>
+                    <p class="text-muted">The interactive modal intercepts common queries with automated answers, formatting unresolved issues into keyword-dense blocks for perfect ML prediction.</p>
+                </div>
+            </div>
+        </div>
+
+        <hr class="mb-5 text-muted">
+
+        <!-- Interactive Demos -->
+        <h2 class="text-center fw-bold mb-4">Explore the Interactive Demos</h2>
+        <div class="row justify-content-center g-4">
+            <div class="col-md-5">
+                <div class="card p-5 text-center h-100">
+                    <h3 class="mb-3">🛍️ Public Storefront</h3>
+                    <span class="badge bg-primary mb-3 mx-auto" style="width: fit-content;">Running on Port 8080</span>
+                    <p class="text-muted mb-4">Experience the customer-facing e-commerce store. Test the dynamic quick-select support modal and submit a ticket.</p>
+                    <a href="http://127.0.0.1:8080" target="_blank" class="btn btn-primary btn-launch mt-auto">Launch Storefront</a>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card p-5 text-center h-100">
+                    <h3 class="mb-3">🔒 Admin Dashboard</h3>
+                    <span class="badge bg-dark mb-3 mx-auto" style="width: fit-content;">Running on Port 8081</span>
+                    <p class="text-muted mb-4">View the secure internal agent dashboard where tickets are instantly routed, department-assigned, and priority-flagged by the AI.</p>
+                    <a href="http://127.0.0.1:8081" target="_blank" class="btn btn-dark btn-launch mt-auto">Launch Admin Portal</a>
+                </div>
+            </div>
+        </div>
+        
+        <div class="text-center mt-5 mb-5 opacity-50">
+            <small>Built with <strong>FastAPI, Python, Scikit-Learn, SQLite, and Bootstrap.</strong></small>
+        </div>
+    </div>
+
+</body>
+</html>

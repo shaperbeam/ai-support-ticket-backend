@@ -1,0 +1,10 @@
+google-genai>=2.25.0
+pydantic
+
+fastapi
+uvicorn
+
+sqlalchemy
+
+scikit-learn
+joblib

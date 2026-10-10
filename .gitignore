@@ -1,0 +1,22 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Environments
+.venv/
+venv/
+ENV/
+env/
+
+# Local database (can be generated using python seed.py)
+tickets.db
+
+# Environment variables / secrets
+.env
+
+# IDEs
+.idea/
+.vscode/
+*.swp
