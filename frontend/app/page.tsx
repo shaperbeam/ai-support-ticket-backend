@@ -522,7 +522,15 @@ export default function Page() {
               <option value="custom">✏️ Custom User Dataset</option>
             </select>
 
-            <div style={{ marginTop: '8px' }}>
+            <div style={{ marginTop: '8px', display: 'flex', flexDirection: 'column', gap: '6px' }}>
+              <button
+                type="button"
+                onClick={runFullDatasetTest}
+                disabled={isLoadingDataset}
+                style={{ width: '100%', padding: '8px 10px', borderRadius: '10px', background: 'linear-gradient(135deg, #4f46e5, #6366f1)', color: '#ffffff', fontSize: '11px', fontWeight: 800, border: 'none', cursor: 'pointer', boxShadow: '0 4px 12px rgba(79,70,229,0.25)' }}
+              >
+                {isLoadingDataset ? '⚡ Running Test...' : '⚡ Classify & Run Dataset Test'}
+              </button>
               <button
                 type="button"
                 onClick={() => setCustomDatasetModalOpen(true)}
@@ -554,6 +562,24 @@ export default function Page() {
                 <div><strong>94.6%</strong><span>Lucent accuracy</span></div>
                 <div><strong>14m</strong><span>Average accuracy time</span></div>
                 <button className={`demo-ticket-button hero-demo-button demo-toggle ${demoMode ? 'is-on' : ''}`} type="button" role="switch" aria-checked={demoMode} onClick={toggleDemoMode}><span className="demo-toggle-track" aria-hidden="true"><span /></span><span>{demoMode ? 'Demo mode on' : 'Demo mode off'}</span></button>
+              </div>
+
+              <div style={{ marginTop: '16px', display: 'flex', gap: '10px' }}>
+                <button
+                  type="button"
+                  onClick={runFullDatasetTest}
+                  disabled={isLoadingDataset}
+                  style={{ padding: '10px 20px', borderRadius: '16px', background: 'linear-gradient(135deg, #4f46e5, #6366f1)', color: '#ffffff', fontSize: '12px', fontWeight: 800, border: 'none', cursor: 'pointer', boxShadow: '0 8px 24px rgba(79,70,229,0.35)', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
+                >
+                  {isLoadingDataset ? '⚡ Running Full Dataset Test...' : '⚡ Classify & Run AI Dataset Test'}
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setDemoDialogOpen(true)}
+                  style={{ padding: '10px 16px', borderRadius: '16px', background: '#ffffff', color: '#4f46e5', fontSize: '12px', fontWeight: 700, border: '1px solid #c7d2fe', cursor: 'pointer' }}
+                >
+                  🧪 Dataset Selector & Suite
+                </button>
               </div>
               {demoDialogOpen && (
   <div className="demo-dialog-backdrop" role="presentation" onMouseDown={() => setDemoDialogOpen(false)}>
