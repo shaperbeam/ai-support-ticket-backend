@@ -810,7 +810,7 @@ function WebsiteChatsView() {
 function AIWorkflowView({ tickets }: { tickets: AnalyticsTicket[] }) {
   const stopWords = new Set(['the', 'my', 'has', 'not', 'yet', 'still', 'about', 'can’t', 'cant', 'with', 'from', 'this', 'that'])
   const getKeywords = (message: string, category: string) => Array.from(new Set(`${message} ${category}`.toLowerCase().replace(/[^a-z0-9 ]/g, '').split(/\s+/).filter((word) => word.length > 3 && !stopWords.has(word))))
-  return <section className="workflow-view analytics-view glass-panel" aria-labelledby="workflow-title"><div className="analytics-heading"><div><p className="eyebrow">Query intelligence</p><h2 id="workflow-title">AI Workflow</h2><p>Extracted keywords per query.</p></div><span className="analytics-count">{tickets.length} queries</span></div><div className="analytics-table-wrap"><table className="analytics-table workflow-table"><thead><tr><th>Query ID</th><th>Keyword</th><th>Department</th><th>Priority</th></tr></thead><tbody>{tickets.map((ticket) => <tr key={ticket.id}><td className="workflow-id-cell"><span className="ticket-id">{ticket.id}</span></td><td className="workflow-keywords-cell"><div className="keyword-list">{getKeywords(ticket.message, ticket.category).map((keyword) => <strong className="query-keyword" key={keyword}>{keyword}</strong>)}</div></td><td>{ticket.department}</td><td><span className={`table-priority ${ticket.priority.toLowerCase()}`}><i />{ticket.priority}</span></td></tr>)}</tbody></table></div></section>
+  return <section className="workflow-view analytics-view glass-panel" aria-labelledby="workflow-title"><div className="analytics-heading"><div><p className="eyebrow">Query intelligence</p><h2 id="workflow-title">AI Workflow</h2><p>Extracted keywords per query.</p></div><span className="analytics-count">{tickets.length} queries</span></div><div className="analytics-table-wrap"><table className="analytics-table workflow-table"><thead><tr><th>Query ID</th><th>Keyword</th><th>Department</th><th>Priority</th></tr></thead><tbody>{tickets.map((ticket, idx) => <tr key={`${ticket.id}-${idx}`}><td className="workflow-id-cell"><span className="ticket-id">{ticket.id}</span></td><td className="workflow-keywords-cell"><div className="keyword-list">{getKeywords(ticket.message, ticket.category).map((keyword, kIdx) => <strong className="query-keyword" key={`${keyword}-${kIdx}`}>{keyword}</strong>)}</div></td><td>{ticket.department}</td><td><span className={`table-priority ${ticket.priority.toLowerCase()}`}><i />{ticket.priority}</span></td></tr>)}</tbody></table></div></section>
 }
 
 function CustomersView() {
@@ -828,7 +828,7 @@ function CustomersView() {
 }
 
 function InboxView({ tickets, onActionClick }: { tickets: AnalyticsTicket[]; onActionClick: (ticket: AnalyticsTicket) => void }) {
-  return <section className="inbox-view glass-panel"><div className="analytics-heading"><div><p className="eyebrow">Human attention</p><h2>Inbox</h2><p>Tickets requiring human review.</p></div><span className="analytics-count">{tickets.length} action required</span></div>{tickets.length ? <div className="inbox-list">{tickets.map((ticket) => <button className="inbox-ticket" key={ticket.id} type="button" onClick={() => onActionClick(ticket)}><span className="inbox-ticket-copy"><strong>{ticket.message}</strong><small>{ticket.id} · {ticket.category} · {ticket.confidence} confidence</small></span><span className="human-action-badge required">Action required</span><ChevronRight /></button>)}</div> : <div className="inbox-empty"><span className="override-notice-icon"><Check /></span><div><strong>Inbox is clear</strong><p>All human-action issues have been resolved.</p></div></div>}</section>
+  return <section className="inbox-view glass-panel"><div className="analytics-heading"><div><p className="eyebrow">Human attention</p><h2>Inbox</h2><p>Tickets requiring human review.</p></div><span className="analytics-count">{tickets.length} action required</span></div>{tickets.length ? <div className="inbox-list">{tickets.map((ticket, idx) => <button className="inbox-ticket" key={`${ticket.id}-${idx}`} type="button" onClick={() => onActionClick(ticket)}><span className="inbox-ticket-copy"><strong>{ticket.message}</strong><small>{ticket.id} · {ticket.category} · {ticket.confidence} confidence</small></span><span className="human-action-badge required">Action required</span><ChevronRight /></button>)}</div> : <div className="inbox-empty"><span className="override-notice-icon"><Check /></span><div><strong>Inbox is clear</strong><p>All human-action issues have been resolved.</p></div></div>}</section>
 }
 
 function ActionDialog({ ticket, threshold, onClose, onConfirm }: { ticket: AnalyticsTicket; threshold: number; onClose: () => void; onConfirm: () => void }) {
@@ -948,10 +948,10 @@ function TicketTable({ tickets, threshold = 85, onThresholdChange, onActionClick
             </tr>
           </thead>
           <tbody>
-            {paginatedTickets.map((ticket) => {
+            {paginatedTickets.map((ticket, idx) => {
               const actionRequired = Number.parseInt(ticket.confidence, 10) < threshold;
               return (
-                <tr key={ticket.id}>
+                <tr key={`${ticket.id}-${idx}`}>
                   <td className="ticket-id">{ticket.id}</td>
                   <td 
                     className="message-cell clickable-message" 
