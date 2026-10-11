@@ -20,3 +20,9 @@ tickets.db
 .idea/
 .vscode/
 *.swp
+
+# Legacy prototypes (kept locally, removed from GitHub)
+index.html
+app.js
+portfolio.html
+static/

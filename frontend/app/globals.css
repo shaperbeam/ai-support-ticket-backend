@@ -472,4 +472,14 @@ button { font: inherit; }
   font-weight: 700 !important;
 }
 
-
+/* Hide Next.js dev indicator badge */
+nextjs-portal,
+[data-nextjs-toast],
+[data-nextjs-dev-overlay],
+[data-next-badge],
+#nextjs-dev-indicator {
+  display: none !important;
+  visibility: hidden !important;
+  opacity: 0 !important;
+  pointer-events: none !important;
+}
