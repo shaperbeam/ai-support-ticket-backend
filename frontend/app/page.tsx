@@ -561,7 +561,33 @@ export default function Page() {
                 <div><strong>5</strong><span>Tickets sorted</span></div>
                 <div><strong>94.6%</strong><span>Lucent accuracy</span></div>
                 <div><strong>14m</strong><span>Average accuracy time</span></div>
-                <button className={`demo-ticket-button hero-demo-button demo-toggle ${demoMode ? 'is-on' : ''}`} type="button" role="switch" aria-checked={demoMode} onClick={toggleDemoMode}><span className="demo-toggle-track" aria-hidden="true"><span /></span><span>{demoMode ? 'Demo mode on' : 'Demo mode off'}</span></button>
+                <button
+                  type="button"
+                  onClick={toggleDemoMode}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    gap: '3px',
+                    padding: '12px 14px',
+                    border: demoMode ? '1px solid #818cf8' : '1px solid rgba(255,255,255,.82)',
+                    borderRadius: '16px',
+                    background: demoMode ? 'linear-gradient(135deg, #4f46e5, #6366f1)' : 'rgba(255,255,255,.45)',
+                    color: demoMode ? '#ffffff' : '#1e293b',
+                    boxShadow: demoMode ? '0 8px 20px rgba(79,70,229,0.3)' : 'inset 0 1px 0 rgba(255,255,255,.75), 0 8px 18px rgba(91,77,38,.06)',
+                    backdropFilter: 'blur(16px)',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  <strong style={{ color: demoMode ? '#ffffff' : '#0f172a', fontSize: '14px', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    🚀 {demoMode ? 'Demo Mode On' : 'Launch Demo'}
+                  </strong>
+                  <span style={{ color: demoMode ? '#e0e7ff' : '#64748b', fontSize: '9px', lineHeight: 1.25 }}>
+                    {demoMode ? 'Storefront active' : 'Test customer store'}
+                  </span>
+                </button>
               </div>
 
               <div style={{ marginTop: '16px', display: 'flex', gap: '10px' }}>
