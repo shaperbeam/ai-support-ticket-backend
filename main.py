@@ -29,11 +29,13 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-app.mount("/static", StaticFiles(directory="static"), name="static")
-
 @app.get("/")
-def read_index():
-    return FileResponse("static/index.html")
+def read_root():
+    return {
+        "service": "Lucent AI Support Intelligence API",
+        "status": "online",
+        "version": "1.0.0"
+    }
 
 # Load the trained Scikit-Learn model globally
 try:
