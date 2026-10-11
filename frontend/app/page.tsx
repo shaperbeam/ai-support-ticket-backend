@@ -1475,74 +1475,122 @@ function MockStorefrontModal({
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
                   
                   {/* Product Card 1 */}
-                  <div style={{ padding: '16px', borderRadius: '18px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', textAlign: 'left', boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
-                    <div style={{ height: '95px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '38px' }}>🎧</div>
-                    <span style={{ fontSize: '10px', color: '#166534', background: '#dcfce7', padding: '2px 8px', borderRadius: '6px', fontWeight: 800, marginTop: '8px', display: 'inline-block' }}>⚡ In Stock (Express Shipping)</span>
-                    <strong style={{ display: 'block', margin: '4px 0 2px', fontSize: '13px', color: '#0f172a' }}>Sony WH-1000XM5 Wireless Headphones</strong>
-                    <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '4px' }}>⭐⭐⭐⭐⭐ <small style={{ color: '#64748b' }}>(12,450)</small></div>
-                    <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '15px' }}>$348.00</span>
-                    <button type="button" onClick={() => handleSend("I was charged twice on my credit card for the Sony Headphones")} style={{ marginTop: '10px', width: '100%', padding: '7px 10px', borderRadius: '10px', border: '1px solid #cbd5e1', background: '#f8fafc', fontSize: '10px', fontWeight: 700, color: '#334155', cursor: 'pointer' }}>
+                  <div className="storefront-product-card" style={{ padding: '18px', borderRadius: '22px', border: '1px solid rgba(255,255,255,0.85)', background: 'linear-gradient(145deg, rgba(255,255,255,0.92), rgba(248,250,252,0.85))', backdropFilter: 'blur(16px)', textAlign: 'left', boxShadow: '0 10px 30px rgba(99,102,241,0.06), inset 0 1px 0 rgba(255,255,255,1)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <div>
+                      <div style={{ height: '100px', borderRadius: '16px', background: 'linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%)', border: '1px solid rgba(224,231,255,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '42px', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.9)' }}>🎧</div>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '10px', gap: '6px' }}>
+                        <span style={{ fontSize: '10px', color: '#15803d', background: '#dcfce7', border: '1px solid #bbf7d0', padding: '3px 9px', borderRadius: '20px', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                          <i style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#16a34a' }} /> Express Stock
+                        </span>
+                        <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '16px', letterSpacing: '-0.02em' }}>$348.00</span>
+                      </div>
+                      <strong style={{ display: 'block', margin: '8px 0 4px', fontSize: '13px', color: '#0f172a', fontWeight: 800, lineHeight: 1.3 }}>Sony WH-1000XM5 Wireless Headphones</strong>
+                      <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        ⭐⭐⭐⭐⭐ <small style={{ color: '#64748b', fontWeight: 600 }}>(12,450 reviews)</small>
+                      </div>
+                    </div>
+                    <button type="button" onClick={() => handleSend("I was charged twice on my credit card for the Sony Headphones")} style={{ marginTop: '6px', width: '100%', padding: '9px 12px', borderRadius: '12px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(238,242,255,0.8)', fontSize: '10px', fontWeight: 800, color: '#3730a3', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
                       💳 Report Double Charge Issue
                     </button>
                   </div>
 
                   {/* Product Card 2 */}
-                  <div style={{ padding: '16px', borderRadius: '18px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', textAlign: 'left', boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
-                    <div style={{ height: '95px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '38px' }}>💻</div>
-                    <span style={{ fontSize: '10px', color: '#166534', background: '#dcfce7', padding: '2px 8px', borderRadius: '6px', fontWeight: 800, marginTop: '8px', display: 'inline-block' }}>⚡ In Stock</span>
-                    <strong style={{ display: 'block', margin: '4px 0 2px', fontSize: '13px', color: '#0f172a' }}>Apple MacBook Air 15" M3 (512GB)</strong>
-                    <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '4px' }}>⭐⭐⭐⭐⭐ <small style={{ color: '#64748b' }}>(8,920)</small></div>
-                    <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '15px' }}>$1,299.00</span>
-                    <button type="button" onClick={() => handleSend("My order #NX-99812 for MacBook Air has not arrived yet")} style={{ marginTop: '10px', width: '100%', padding: '7px 10px', borderRadius: '10px', border: '1px solid #c7d2fe', background: '#eef2ff', fontSize: '10px', fontWeight: 700, color: '#3730a3', cursor: 'pointer' }}>
+                  <div className="storefront-product-card" style={{ padding: '18px', borderRadius: '22px', border: '1px solid rgba(255,255,255,0.85)', background: 'linear-gradient(145deg, rgba(255,255,255,0.92), rgba(248,250,252,0.85))', backdropFilter: 'blur(16px)', textAlign: 'left', boxShadow: '0 10px 30px rgba(99,102,241,0.06), inset 0 1px 0 rgba(255,255,255,1)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <div>
+                      <div style={{ height: '100px', borderRadius: '16px', background: 'linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%)', border: '1px solid rgba(224,231,255,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '42px', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.9)' }}>💻</div>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '10px', gap: '6px' }}>
+                        <span style={{ fontSize: '10px', color: '#15803d', background: '#dcfce7', border: '1px solid #bbf7d0', padding: '3px 9px', borderRadius: '20px', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                          <i style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#16a34a' }} /> In Stock
+                        </span>
+                        <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '16px', letterSpacing: '-0.02em' }}>$1,299.00</span>
+                      </div>
+                      <strong style={{ display: 'block', margin: '8px 0 4px', fontSize: '13px', color: '#0f172a', fontWeight: 800, lineHeight: 1.3 }}>Apple MacBook Air 15" M3 (512GB)</strong>
+                      <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        ⭐⭐⭐⭐⭐ <small style={{ color: '#64748b', fontWeight: 600 }}>(8,920 reviews)</small>
+                      </div>
+                    </div>
+                    <button type="button" onClick={() => handleSend("My order #NX-99812 for MacBook Air has not arrived yet")} style={{ marginTop: '6px', width: '100%', padding: '9px 12px', borderRadius: '12px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(238,242,255,0.8)', fontSize: '10px', fontWeight: 800, color: '#3730a3', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
                       📦 Track Delivery Status
                     </button>
                   </div>
 
                   {/* Product Card 3 */}
-                  <div style={{ padding: '16px', borderRadius: '18px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', textAlign: 'left', boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
-                    <div style={{ height: '95px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '38px' }}>📱</div>
-                    <span style={{ fontSize: '10px', color: '#166534', background: '#dcfce7', padding: '2px 8px', borderRadius: '6px', fontWeight: 800, marginTop: '8px', display: 'inline-block' }}>⚡ In Stock</span>
-                    <strong style={{ display: 'block', margin: '4px 0 2px', fontSize: '13px', color: '#0f172a' }}>Samsung Galaxy S24 Ultra (512GB)</strong>
-                    <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '4px' }}>⭐⭐⭐⭐⭐ <small style={{ color: '#64748b' }}>(6,410)</small></div>
-                    <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '15px' }}>$1,199.00</span>
-                    <button type="button" onClick={() => handleSend("My order #NX-88210 for Samsung S24 has not arrived yet, tracking has not updated in 4 days")} style={{ marginTop: '10px', width: '100%', padding: '7px 10px', borderRadius: '10px', border: '1px solid #cbd5e1', background: '#f8fafc', fontSize: '10px', fontWeight: 700, color: '#334155', cursor: 'pointer' }}>
+                  <div className="storefront-product-card" style={{ padding: '18px', borderRadius: '22px', border: '1px solid rgba(255,255,255,0.85)', background: 'linear-gradient(145deg, rgba(255,255,255,0.92), rgba(248,250,252,0.85))', backdropFilter: 'blur(16px)', textAlign: 'left', boxShadow: '0 10px 30px rgba(99,102,241,0.06), inset 0 1px 0 rgba(255,255,255,1)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <div>
+                      <div style={{ height: '100px', borderRadius: '16px', background: 'linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%)', border: '1px solid rgba(224,231,255,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '42px', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.9)' }}>📱</div>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '10px', gap: '6px' }}>
+                        <span style={{ fontSize: '10px', color: '#15803d', background: '#dcfce7', border: '1px solid #bbf7d0', padding: '3px 9px', borderRadius: '20px', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                          <i style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#16a34a' }} /> In Stock
+                        </span>
+                        <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '16px', letterSpacing: '-0.02em' }}>$1,199.00</span>
+                      </div>
+                      <strong style={{ display: 'block', margin: '8px 0 4px', fontSize: '13px', color: '#0f172a', fontWeight: 800, lineHeight: 1.3 }}>Samsung Galaxy S24 Ultra (512GB)</strong>
+                      <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        ⭐⭐⭐⭐⭐ <small style={{ color: '#64748b', fontWeight: 600 }}>(6,410 reviews)</small>
+                      </div>
+                    </div>
+                    <button type="button" onClick={() => handleSend("My order #NX-88210 for Samsung S24 has not arrived yet, tracking has not updated in 4 days")} style={{ marginTop: '6px', width: '100%', padding: '9px 12px', borderRadius: '12px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(238,242,255,0.8)', fontSize: '10px', fontWeight: 800, color: '#3730a3', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
                       🚚 Report Shipping Delay
                     </button>
                   </div>
 
                   {/* Product Card 4 */}
-                  <div style={{ padding: '16px', borderRadius: '18px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', textAlign: 'left', boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
-                    <div style={{ height: '95px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '38px' }}>🎮</div>
-                    <span style={{ fontSize: '10px', color: '#9a3412', background: '#ffedd5', padding: '2px 8px', borderRadius: '6px', fontWeight: 800, marginTop: '8px', display: 'inline-block' }}>🔥 High Demand</span>
-                    <strong style={{ display: 'block', margin: '4px 0 2px', fontSize: '13px', color: '#0f172a' }}>Sony PlayStation 5 Pro Console</strong>
-                    <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '4px' }}>⭐⭐⭐⭐⭐ <small style={{ color: '#64748b' }}>(15,800)</small></div>
-                    <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '15px' }}>$699.00</span>
-                    <button type="button" onClick={() => handleSend("The checkout payment gateway returned error 500 when attempting PS5 payment")} style={{ marginTop: '10px', width: '100%', padding: '7px 10px', borderRadius: '10px', border: '1px solid #fca5a5', background: '#fef2f2', fontSize: '10px', fontWeight: 700, color: '#dc2626', cursor: 'pointer' }}>
-                      ⚠️ Report Payment Gateway 500 Error
+                  <div className="storefront-product-card" style={{ padding: '18px', borderRadius: '22px', border: '1px solid rgba(255,255,255,0.85)', background: 'linear-gradient(145deg, rgba(255,255,255,0.92), rgba(248,250,252,0.85))', backdropFilter: 'blur(16px)', textAlign: 'left', boxShadow: '0 10px 30px rgba(99,102,241,0.06), inset 0 1px 0 rgba(255,255,255,1)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <div>
+                      <div style={{ height: '100px', borderRadius: '16px', background: 'linear-gradient(135deg, #fff7ed 0%, #ffedd5 100%)', border: '1px solid #fed7aa', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '42px', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.9)' }}>🎮</div>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '10px', gap: '6px' }}>
+                        <span style={{ fontSize: '10px', color: '#c2410c', background: '#ffedd5', border: '1px solid #fed7aa', padding: '3px 9px', borderRadius: '20px', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                          🔥 High Demand
+                        </span>
+                        <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '16px', letterSpacing: '-0.02em' }}>$699.00</span>
+                      </div>
+                      <strong style={{ display: 'block', margin: '8px 0 4px', fontSize: '13px', color: '#0f172a', fontWeight: 800, lineHeight: 1.3 }}>Sony PlayStation 5 Pro Console</strong>
+                      <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        ⭐⭐⭐⭐⭐ <small style={{ color: '#64748b', fontWeight: 600 }}>(15,800 reviews)</small>
+                      </div>
+                    </div>
+                    <button type="button" onClick={() => handleSend("The checkout payment gateway returned error 500 when attempting PS5 payment")} style={{ marginTop: '6px', width: '100%', padding: '9px 12px', borderRadius: '12px', border: '1px solid rgba(254,202,202,0.8)', background: '#fef2f2', fontSize: '10px', fontWeight: 800, color: '#dc2626', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                      ⚠️ Report Payment 500 Error
                     </button>
                   </div>
 
                   {/* Product Card 5 */}
-                  <div style={{ padding: '16px', borderRadius: '18px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', textAlign: 'left', boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
-                    <div style={{ height: '95px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '38px' }}>🖥️</div>
-                    <span style={{ fontSize: '10px', color: '#166534', background: '#dcfce7', padding: '2px 8px', borderRadius: '6px', fontWeight: 800, marginTop: '8px', display: 'inline-block' }}>⚡ In Stock</span>
-                    <strong style={{ display: 'block', margin: '4px 0 2px', fontSize: '13px', color: '#0f172a' }}>Dell XPS 16 OLED Laptop (64GB RAM)</strong>
-                    <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '4px' }}>⭐⭐⭐⭐⭐ <small style={{ color: '#64748b' }}>(3,120)</small></div>
-                    <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '15px' }}>$1,899.00</span>
-                    <button type="button" onClick={() => handleSend("I received a damaged laptop package and need to print a return shipping label")} style={{ marginTop: '10px', width: '100%', padding: '7px 10px', borderRadius: '10px', border: '1px solid #cbd5e1', background: '#f8fafc', fontSize: '10px', fontWeight: 700, color: '#334155', cursor: 'pointer' }}>
-                      🏷️ Request Damaged Item Return Label
+                  <div className="storefront-product-card" style={{ padding: '18px', borderRadius: '22px', border: '1px solid rgba(255,255,255,0.85)', background: 'linear-gradient(145deg, rgba(255,255,255,0.92), rgba(248,250,252,0.85))', backdropFilter: 'blur(16px)', textAlign: 'left', boxShadow: '0 10px 30px rgba(99,102,241,0.06), inset 0 1px 0 rgba(255,255,255,1)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <div>
+                      <div style={{ height: '100px', borderRadius: '16px', background: 'linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%)', border: '1px solid rgba(224,231,255,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '42px', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.9)' }}>🖥️</div>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '10px', gap: '6px' }}>
+                        <span style={{ fontSize: '10px', color: '#15803d', background: '#dcfce7', border: '1px solid #bbf7d0', padding: '3px 9px', borderRadius: '20px', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                          <i style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#16a34a' }} /> In Stock
+                        </span>
+                        <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '16px', letterSpacing: '-0.02em' }}>$1,899.00</span>
+                      </div>
+                      <strong style={{ display: 'block', margin: '8px 0 4px', fontSize: '13px', color: '#0f172a', fontWeight: 800, lineHeight: 1.3 }}>Dell XPS 16 OLED Laptop (64GB RAM)</strong>
+                      <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        ⭐⭐⭐⭐⭐ <small style={{ color: '#64748b', fontWeight: 600 }}>(3,120 reviews)</small>
+                      </div>
+                    </div>
+                    <button type="button" onClick={() => handleSend("I received a damaged laptop package and need to print a return shipping label")} style={{ marginTop: '6px', width: '100%', padding: '9px 12px', borderRadius: '12px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(238,242,255,0.8)', fontSize: '10px', fontWeight: 800, color: '#3730a3', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                      🏷️ Request Damaged Item Return
                     </button>
                   </div>
 
                   {/* Product Card 6 */}
-                  <div style={{ padding: '16px', borderRadius: '18px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', textAlign: 'left', boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
-                    <div style={{ height: '95px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '38px' }}>⌚</div>
-                    <span style={{ fontSize: '10px', color: '#166534', background: '#dcfce7', padding: '2px 8px', borderRadius: '6px', fontWeight: 800, marginTop: '8px', display: 'inline-block' }}>⚡ In Stock</span>
-                    <strong style={{ display: 'block', margin: '4px 0 2px', fontSize: '13px', color: '#0f172a' }}>Apple Watch Ultra 2 Titanium</strong>
-                    <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '4px' }}>⭐⭐⭐⭐⭐ <small style={{ color: '#64748b' }}>(7,490)</small></div>
-                    <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '15px' }}>$799.00</span>
-                    <button type="button" onClick={() => handleSend("My 20% promo code SAVE20 is not applying at checkout for Apple Watch")} style={{ marginTop: '10px', width: '100%', padding: '7px 10px', borderRadius: '10px', border: '1px solid #c7d2fe', background: '#eef2ff', fontSize: '10px', fontWeight: 700, color: '#3730a3', cursor: 'pointer' }}>
-                      🎟️ Promo Code Not Working Issue
+                  <div className="storefront-product-card" style={{ padding: '18px', borderRadius: '22px', border: '1px solid rgba(255,255,255,0.85)', background: 'linear-gradient(145deg, rgba(255,255,255,0.92), rgba(248,250,252,0.85))', backdropFilter: 'blur(16px)', textAlign: 'left', boxShadow: '0 10px 30px rgba(99,102,241,0.06), inset 0 1px 0 rgba(255,255,255,1)', display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                    <div>
+                      <div style={{ height: '100px', borderRadius: '16px', background: 'linear-gradient(135deg, #f8fafc 0%, #eef2ff 100%)', border: '1px solid rgba(224,231,255,0.8)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '42px', boxShadow: 'inset 0 2px 4px rgba(255,255,255,0.9)' }}>⌚</div>
+                      <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between', marginTop: '10px', gap: '6px' }}>
+                        <span style={{ fontSize: '10px', color: '#15803d', background: '#dcfce7', border: '1px solid #bbf7d0', padding: '3px 9px', borderRadius: '20px', fontWeight: 800, display: 'inline-flex', alignItems: 'center', gap: '4px' }}>
+                          <i style={{ width: '5px', height: '5px', borderRadius: '50%', background: '#16a34a' }} /> In Stock
+                        </span>
+                        <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '16px', letterSpacing: '-0.02em' }}>$799.00</span>
+                      </div>
+                      <strong style={{ display: 'block', margin: '8px 0 4px', fontSize: '13px', color: '#0f172a', fontWeight: 800, lineHeight: 1.3 }}>Apple Watch Ultra 2 Titanium</strong>
+                      <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '8px', display: 'flex', alignItems: 'center', gap: '4px' }}>
+                        ⭐⭐⭐⭐⭐ <small style={{ color: '#64748b', fontWeight: 600 }}>(7,490 reviews)</small>
+                      </div>
+                    </div>
+                    <button type="button" onClick={() => handleSend("My 20% promo code SAVE20 is not applying at checkout for Apple Watch")} style={{ marginTop: '6px', width: '100%', padding: '9px 12px', borderRadius: '12px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(238,242,255,0.8)', fontSize: '10px', fontWeight: 800, color: '#3730a3', cursor: 'pointer', display: 'flex', alignItems: 'center', justifyContent: 'center', gap: '6px' }}>
+                      🎟️ Promo Code Issue
                     </button>
                   </div>
 

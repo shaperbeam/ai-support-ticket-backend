@@ -302,9 +302,10 @@ button { font: inherit; }
 .analytics-heading h2, .section-heading h3, .hero-card h2, #knowledge-title, #email-title, #whatsapp-title, #website-chat-title { color: #0f172a !important; font-weight: 700 !important; }
 .analytics-heading p:not(.eyebrow), .subheading, .email-intro, .knowledge-heading p:last-child { color: #64748b !important; }
 .analytics-count { background: rgba(255,255,255,0.8) !important; border: 1px solid rgba(199,210,254,0.6) !important; color: #4f46e5 !important; }
-.qunexa-topbar { position: relative; display: flex; justify-content: center; align-items: center; min-height: 48px; padding: 4px 0 10px; }
-.qunexa-cylinder { position: relative; display: grid; place-items: center; width: min(74%, 720px); height: 40px; transform: translateY(0); border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,0.95), rgba(238,242,255,0.7)) !important; border: 1px solid rgba(255,255,255,0.95) !important; box-shadow: 0 10px 25px rgba(99,102,241,0.12), inset 0 2px 4px rgba(255,255,255,1) !important; }
-.qunexa-cylinder span { color: #312e81 !important; font-size: 20px !important; letter-spacing: .25em !important; text-shadow: 0 1px 0 rgba(255,255,255,1) !important; }
+.content-area { min-width:0; flex:1; padding: 22px clamp(24px, 5vw, 78px) 23px !important; position:relative; z-index:1; }
+.qunexa-topbar { position: relative; display: flex; justify-content: center; align-items: center; min-height: 56px; padding: 0 0 14px; margin-top: -10px !important; margin-bottom: 6px !important; }
+.qunexa-cylinder { position: relative; display: grid; place-items: center; width: min(85%, 840px) !important; height: 52px !important; transform: translateY(-4px) !important; border-radius: 999px; background: linear-gradient(180deg, rgba(255,255,255,0.96), rgba(238,242,255,0.75)) !important; border: 1px solid rgba(255,255,255,0.98) !important; box-shadow: 0 14px 35px rgba(99,102,241,0.16), inset 0 2px 4px rgba(255,255,255,1) !important; }
+.qunexa-cylinder span { color: #312e81 !important; font-size: 26px !important; font-weight: 900 !important; letter-spacing: .35em !important; text-shadow: 0 1px 0 rgba(255,255,255,1) !important; }
 .analytics-table th { color: #64748b !important; background: rgba(248,250,252,0.6) !important; }
 .analytics-table td { background: rgba(255,255,255,0.6) !important; border-color: rgba(241,245,249,0.9) !important; color: #334155 !important; }
 .analytics-table tbody tr:hover td { background: rgba(238,242,255,0.7) !important; }
@@ -320,3 +321,155 @@ button { font: inherit; }
 .chat-message.assistant { background: #f1f5f9 !important; color: #1e293b !important; }
 .chat-form input { background: #ffffff !important; color: #0f172a !important; border: 1px solid #cbd5e1 !important; }
 .demo-submit { background: linear-gradient(135deg, #4f46e5, #6366f1) !important; color: #ffffff !important; box-shadow: 0 4px 12px rgba(79,70,229,0.25) !important; }
+
+/* FLUID DYNAMIC MOTION & MICRO-INTERACTIONS SYSTEM */
+@keyframes fluid-drift-one {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(65px, 45px) scale(1.15); }
+}
+
+@keyframes fluid-drift-two {
+  0%, 100% { transform: translate(0, 0) scale(1); }
+  50% { transform: translate(-55px, -40px) scale(1.1); }
+}
+
+.aurora-one { animation: fluid-drift-one 18s ease-in-out infinite !important; }
+.aurora-two { animation: fluid-drift-two 22s ease-in-out infinite !important; }
+
+@keyframes fluid-spring-in {
+  0% { opacity: 0; transform: scale(0.92) translateY(16px); filter: blur(6px); }
+  60% { opacity: 1; transform: scale(1.015) translateY(-3px); filter: blur(0px); }
+  100% { opacity: 1; transform: scale(1) translateY(0); filter: blur(0px); }
+}
+
+@keyframes fluid-fade-backdrop {
+  0% { opacity: 0; backdrop-filter: blur(0px); }
+  100% { opacity: 1; backdrop-filter: blur(14px); }
+}
+
+.demo-dialog-backdrop, .action-dialog-backdrop, .article-reader-backdrop {
+  animation: fluid-fade-backdrop 0.35s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+.demo-dialog, .mock-storefront-dialog, .article-reader {
+  animation: fluid-spring-in 0.45s cubic-bezier(0.16, 1, 0.3, 1) forwards !important;
+}
+
+/* Fluid Hover Micro-Interactions */
+.glass-panel, .stat-card, .tickets-card, .channels-card, .knowledge-card, .storefront-product-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), background 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.glass-panel:hover, .stat-card:hover {
+  transform: translateY(-3px) scale(1.01);
+  box-shadow: 0 16px 36px rgba(99, 102, 241, 0.12), inset 0 1px 0 rgba(255, 255, 255, 1);
+}
+
+.storefront-product-card {
+  transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.35s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.35s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.storefront-product-card:hover {
+  transform: translateY(-4px) scale(1.02) !important;
+  box-shadow: 0 16px 36px rgba(99, 102, 241, 0.15), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+  border-color: rgba(129, 140, 248, 0.8) !important;
+}
+
+.ticket-row {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.ticket-row:hover {
+  transform: translateX(5px) !important;
+}
+
+.nav-item {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.nav-item:hover {
+  transform: translateX(4px) !important;
+}
+
+.primary-button, .demo-submit, .hero-metrics > button, .help-button, .icon-button, .search-button {
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), filter 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.primary-button:hover, .demo-submit:not(:disabled):hover {
+  transform: translateY(-2px) scale(1.02) !important;
+  box-shadow: 0 12px 24px rgba(79, 70, 229, 0.35) !important;
+}
+
+.primary-button:active, .demo-submit:not(:disabled):active {
+  transform: translateY(0) scale(0.98) !important;
+}
+
+@keyframes lucent-orbital-pulse {
+  0%, 100% { transform: translate(-50%, -50%) scale(1); filter: drop-shadow(0 0 15px rgba(129, 140, 248, 0.4)); }
+  50% { transform: translate(-50%, -50%) scale(1.06); filter: drop-shadow(0 0 28px rgba(168, 85, 247, 0.65)); }
+}
+
+.hero-visual .lucent-logo {
+  animation: lucent-orbital-pulse 6s ease-in-out infinite !important;
+}
+
+/* ULTRA-SMOOTH ROUNDED BORDERS & TICKET ROW SYSTEM */
+.glass-panel, .tickets-card, .channels-card, .stat-card {
+  border-radius: 24px !important;
+  overflow: hidden !important;
+  border: 1px solid rgba(255, 255, 255, 0.92) !important;
+  box-shadow: 0 14px 35px rgba(99, 102, 241, 0.08), inset 0 1px 2px rgba(255, 255, 255, 1) !important;
+}
+
+.ticket-list {
+  display: flex !important;
+  flex-direction: column !important;
+  gap: 8px !important;
+  margin-top: 16px !important;
+  padding: 2px !important;
+}
+
+.ticket-row {
+  border: 1px solid rgba(255, 255, 255, 0.5) !important;
+  border-top: 1px solid rgba(255, 255, 255, 0.8) !important;
+  border-radius: 16px !important;
+  padding: 12px 16px !important;
+  margin: 0 !important;
+  background: rgba(255, 255, 255, 0.35) !important;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.02), inset 0 1px 0 rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1), background 0.25s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.25s cubic-bezier(0.16, 1, 0.3, 1) !important;
+}
+
+.ticket-row:hover {
+  background: rgba(255, 255, 255, 0.78) !important;
+  border-color: rgba(199, 210, 254, 0.95) !important;
+  transform: translateX(6px) translateY(-1px) !important;
+  box-shadow: 0 8px 24px rgba(99, 102, 241, 0.14), inset 0 1px 0 rgba(255, 255, 255, 1) !important;
+}
+
+.ticket-tag {
+  padding: 6px 14px !important;
+  border-radius: 999px !important;
+  font-size: 10px !important;
+  font-weight: 800 !important;
+  letter-spacing: 0.02em !important;
+  border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.03) !important;
+}
+
+.ticket-avatar {
+  border-radius: 50% !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06), inset 0 1px 0 rgba(255, 255, 255, 0.8) !important;
+}
+
+.priority {
+  padding: 4px 10px !important;
+  border-radius: 999px !important;
+  background: rgba(255, 255, 255, 0.4) !important;
+  border: 1px solid rgba(255, 255, 255, 0.65) !important;
+  font-weight: 700 !important;
+}
+
+
