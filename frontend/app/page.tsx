@@ -589,47 +589,6 @@ export default function Page() {
                   </span>
                 </button>
               </div>
-
-              <div style={{ marginTop: '16px', display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
-                <select 
-                  value={selectedDatasetKey} 
-                  onChange={(e) => setSelectedDatasetKey(e.target.value)}
-                  style={{
-                    padding: '10px 14px',
-                    borderRadius: '16px',
-                    border: '1px solid #c7d2fe',
-                    background: '#ffffff',
-                    color: '#312e81',
-                    fontSize: '12px',
-                    fontWeight: 700,
-                    cursor: 'pointer',
-                    outline: 'none',
-                    boxShadow: '0 4px 14px rgba(99,102,241,0.08)'
-                  }}
-                  title="Select dataset to test"
-                >
-                  {Object.entries(TEST_DATASETS).map(([key, ds]) => (
-                    <option key={key} value={key}>{ds.name}</option>
-                  ))}
-                </select>
-
-                <button
-                  type="button"
-                  onClick={runFullDatasetTest}
-                  disabled={isLoadingDataset}
-                  style={{ padding: '10px 20px', borderRadius: '16px', background: 'linear-gradient(135deg, #4f46e5, #6366f1)', color: '#ffffff', fontSize: '12px', fontWeight: 800, border: 'none', cursor: 'pointer', boxShadow: '0 8px 24px rgba(79,70,229,0.35)', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
-                >
-                  {isLoadingDataset ? '⚡ Running Test...' : '⚡ Classify & Run AI Dataset Test'}
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setDemoDialogOpen(true)}
-                  style={{ padding: '10px 16px', borderRadius: '16px', background: '#ffffff', color: '#4f46e5', fontSize: '12px', fontWeight: 700, border: '1px solid #c7d2fe', cursor: 'pointer' }}
-                >
-                  🧪 Test Suite & CSV
-                </button>
-              </div>
               {demoDialogOpen && (
   <div className="demo-dialog-backdrop" role="presentation" onMouseDown={() => setDemoDialogOpen(false)}>
     <div className="demo-dialog glass-panel" role="dialog" aria-modal="true" aria-labelledby="demo-dialog-title" style={{ width: 'min(92%, 500px)', padding: '24px' }} onMouseDown={(event) => event.stopPropagation()}>
@@ -682,61 +641,67 @@ export default function Page() {
   </div>
 )}
             </div>
-            <button className="hero-visual" type="button" aria-label="Open Lucent chat assistant" onClick={() => setChatOpen(true)}><div className="orbit orbit-a" aria-hidden="true" /><div className="orbit orbit-b" aria-hidden="true" /><div className="lucent-logo" aria-hidden="true"><span>L</span></div></button>{chatOpen && (
-  <div className="chat-dialog-backdrop" role="presentation" onMouseDown={() => setChatOpen(false)}>
-    <section className="chat-dialog" role="dialog" aria-modal="true" aria-labelledby="chat-dialog-title" onMouseDown={(event) => event.stopPropagation()} style={{ width: 'min(92%, 520px)', padding: '24px', borderRadius: '24px', background: '#ffffff', border: '1px solid rgba(199,210,254,0.8)', boxShadow: '0 25px 70px rgba(99,102,241,0.25)', display: 'flex', flexDirection: 'column', maxHeight: '85vh' }}>
-      <button className="demo-dialog-close" type="button" aria-label="Close Lucent chat" onClick={() => setChatOpen(false)}><X /></button>
-      <p className="eyebrow" style={{ color: '#4f46e5', fontWeight: 700 }}>Lucent Assistant & Website Guide</p>
-      <h3 id="chat-dialog-title" style={{ margin: '2px 0 10px', fontSize: '20px' }}>How can I help you navigate or resolve issues?</h3>
-      
-      {/* Quick Predefined Questions Chips */}
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '12px' }}>
-        {PREDEFINED_QUESTIONS.map((q) => (
-          <button
-            key={q}
-            type="button"
-            onClick={() => submitCustomQuery(q)}
-            disabled={chatIsTyping}
-            style={{
-              padding: '5px 11px',
-              borderRadius: '16px',
-              background: '#eef2ff',
-              border: '1px solid #c7d2fe',
-              color: '#3730a3',
-              fontSize: '11px',
-              fontWeight: 600,
-              cursor: 'pointer',
-              transition: 'all 0.15s ease',
-            }}
-          >
-            {q}
-          </button>
-        ))}
-      </div>
-
-      <div className="chat-messages" aria-live="polite" style={{ flex: 1, overflowY: 'auto', marginBottom: '12px' }}>
-        {chatMessages.map((message, index) => (
-          <div className={`chat-message ${message.role}`} key={`${message.role}-${index}`} style={{ whiteSpace: 'pre-wrap', lineHeight: '1.45' }}>
-            {message.role === 'assistant' ? renderMessageContent(message.text) : message.text}
-          </div>
-        ))}
-        {chatIsTyping && <div className="chat-message assistant" style={{ opacity: 0.6, fontStyle: 'italic' }}>Lucent is typing...</div>}
-        {chatGuide.length > 0 && (
-          <div className="chat-guide">
-            <p className="eyebrow">Suggested next steps</p>
-            <ol>{chatGuide.map((step) => <li key={step}>{step}</li>)}</ol>
-          </div>
-        )}
-      </div>
-
-      <form className="chat-form" onSubmit={sendChatQuery}>
-        <input value={chatQuery} onChange={(event) => setChatQuery(event.target.value)} placeholder="Type your query or click a quick question..." aria-label="Your query" />
-        <button className="demo-submit" type="submit" disabled={!chatQuery.trim() || chatIsTyping}>Send</button>
-      </form>
-    </section>
-  </div>
-)}
+            <button className="hero-visual" type="button" aria-label="Open Lucent chat assistant" onClick={() => setChatOpen(true)}>
+              <div className="orbit orbit-a" aria-hidden="true" />
+              <div className="orbit orbit-b" aria-hidden="true" />
+              <div className="lucent-logo" aria-hidden="true"><span>L</span></div>
+            </button>
           </section>
+
+          {chatOpen && (
+            <div className="chat-dialog-backdrop" role="presentation" onMouseDown={() => setChatOpen(false)}>
+              <section className="chat-dialog" role="dialog" aria-modal="true" aria-labelledby="chat-dialog-title" onMouseDown={(event) => event.stopPropagation()} style={{ width: 'min(92%, 520px)', padding: '24px', borderRadius: '24px', background: '#ffffff', border: '1px solid rgba(199,210,254,0.8)', boxShadow: '0 25px 70px rgba(99,102,241,0.25)', display: 'flex', flexDirection: 'column', maxHeight: '85vh' }}>
+                <button className="demo-dialog-close" type="button" aria-label="Close Lucent chat" onClick={() => setChatOpen(false)}><X /></button>
+                <p className="eyebrow" style={{ color: '#4f46e5', fontWeight: 700 }}>Lucent Assistant & Website Guide</p>
+                <h3 id="chat-dialog-title" style={{ margin: '2px 0 10px', fontSize: '20px' }}>How can I help you navigate or resolve issues?</h3>
+                
+                {/* Quick Predefined Questions Chips */}
+                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '12px' }}>
+                  {PREDEFINED_QUESTIONS.map((q) => (
+                    <button
+                      key={q}
+                      type="button"
+                      onClick={() => submitCustomQuery(q)}
+                      disabled={chatIsTyping}
+                      style={{
+                        padding: '5px 11px',
+                        borderRadius: '16px',
+                        background: '#eef2ff',
+                        border: '1px solid #c7d2fe',
+                        color: '#3730a3',
+                        fontSize: '11px',
+                        fontWeight: 600,
+                        cursor: 'pointer',
+                        transition: 'all 0.15s ease',
+                      }}
+                    >
+                      {q}
+                    </button>
+                  ))}
+                </div>
+
+                <div className="chat-messages" aria-live="polite" style={{ flex: 1, overflowY: 'auto', marginBottom: '12px' }}>
+                  {chatMessages.map((message, index) => (
+                    <div className={`chat-message ${message.role}`} key={`${message.role}-${index}`} style={{ whiteSpace: 'pre-wrap', lineHeight: '1.45' }}>
+                      {message.role === 'assistant' ? renderMessageContent(message.text) : message.text}
+                    </div>
+                  ))}
+                  {chatIsTyping && <div className="chat-message assistant" style={{ opacity: 0.6, fontStyle: 'italic' }}>Lucent is typing...</div>}
+                  {chatGuide.length > 0 && (
+                    <div className="chat-guide">
+                      <p className="eyebrow">Suggested next steps</p>
+                      <ol>{chatGuide.map((step) => <li key={step}>{step}</li>)}</ol>
+                    </div>
+                  )}
+                </div>
+
+                <form className="chat-form" onSubmit={sendChatQuery}>
+                  <input value={chatQuery} onChange={(event) => setChatQuery(event.target.value)} placeholder="Type your query or click a quick question..." aria-label="Your query" />
+                  <button className="demo-submit" type="submit" disabled={!chatQuery.trim() || chatIsTyping}>Send</button>
+                </form>
+              </section>
+            </div>
+          )}
 
           <div className="stats-grid"><StatCard label="Open tickets" value="128" delta="12.5%" icon={Inbox} /><StatCard label="Avg. response time" value="14m" delta="8.2%" icon={Clock3} positive /><StatCard label="Resolution rate" value="86.4%" delta="4.8%" icon={Sparkles} positive /></div>
 
