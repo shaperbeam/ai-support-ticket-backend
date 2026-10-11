@@ -440,11 +440,7 @@ export default function Page() {
   }
 
   const toggleDemoMode = () => {
-    setDemoMode((enabled) => {
-      const nextEnabled = !enabled
-      setDemoDialogOpen(nextEnabled)
-      return nextEnabled
-    })
+    setDemoMode((enabled) => !enabled)
   }
 
   const selectItem = (label: string) => {
@@ -581,65 +577,42 @@ export default function Page() {
                     transition: 'all 0.2s ease'
                   }}
                 >
-                  <strong style={{ color: demoMode ? '#ffffff' : '#0f172a', fontSize: '14px', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                  <strong style={{ color: demoMode ? '#ffffff' : '#0f172a', fontSize: '13px', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '5px' }}>
                     🚀 {demoMode ? 'Demo Mode On' : 'Launch Demo'}
                   </strong>
                   <span style={{ color: demoMode ? '#e0e7ff' : '#64748b', fontSize: '9px', lineHeight: 1.25 }}>
                     {demoMode ? 'Storefront active' : 'Test customer store'}
                   </span>
                 </button>
+
+                <button
+                  type="button"
+                  onClick={() => setDemoDialogOpen(true)}
+                  style={{
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
+                    gap: '3px',
+                    padding: '12px 14px',
+                    border: demoDialogOpen ? '1px solid #818cf8' : '1px solid rgba(255,255,255,.82)',
+                    borderRadius: '16px',
+                    background: demoDialogOpen ? 'linear-gradient(135deg, #4f46e5, #6366f1)' : 'rgba(255,255,255,.45)',
+                    color: demoDialogOpen ? '#ffffff' : '#1e293b',
+                    boxShadow: demoDialogOpen ? '0 8px 20px rgba(79,70,229,0.3)' : 'inset 0 1px 0 rgba(255,255,255,.75), 0 8px 18px rgba(91,77,38,.06)',
+                    backdropFilter: 'blur(16px)',
+                    cursor: 'pointer',
+                    textAlign: 'left',
+                    transition: 'all 0.2s ease'
+                  }}
+                >
+                  <strong style={{ color: demoDialogOpen ? '#ffffff' : '#0f172a', fontSize: '13px', letterSpacing: '-0.02em', display: 'flex', alignItems: 'center', gap: '5px' }}>
+                    🧪 Test Support System
+                  </strong>
+                  <span style={{ color: demoDialogOpen ? '#e0e7ff' : '#64748b', fontSize: '9px', lineHeight: 1.25 }}>
+                    {demoDialogOpen ? 'System active' : 'Dataset selector & test'}
+                  </span>
+                </button>
               </div>
-              {demoDialogOpen && (
-  <div className="demo-dialog-backdrop" role="presentation" onMouseDown={() => setDemoDialogOpen(false)}>
-    <div className="demo-dialog glass-panel" role="dialog" aria-modal="true" aria-labelledby="demo-dialog-title" style={{ width: 'min(92%, 500px)', padding: '24px' }} onMouseDown={(event) => event.stopPropagation()}>
-      <button className="demo-dialog-close" type="button" aria-label="Close" onClick={() => setDemoDialogOpen(false)}><X /></button>
-      <p className="eyebrow" style={{ color: '#4f46e5', fontWeight: 700 }}>AI Test Suite & Dataset Selector</p>
-      <h3 id="demo-dialog-title" style={{ margin: '4px 0 10px', fontSize: '22px' }}>Test Support System</h3>
-
-      <div style={{ marginBottom: '14px', textAlign: 'left' }}>
-        <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: '#475569', marginBottom: '5px' }}>Select Industry Test Dataset</label>
-        <select 
-          value={selectedDatasetKey} 
-          onChange={(e) => setSelectedDatasetKey(e.target.value)}
-          style={{ width: '100%', padding: '9px 12px', borderRadius: '12px', border: '1px solid #cbd5e1', background: '#ffffff', color: '#0f172a', fontSize: '12px', fontWeight: 600, outline: 'none' }}
-        >
-          {Object.entries(TEST_DATASETS).map(([key, ds]) => (
-            <option key={key} value={key}>{ds.name}</option>
-          ))}
-        </select>
-        <p style={{ margin: '4px 0 0', fontSize: '10px', color: '#64748b' }}>{TEST_DATASETS[selectedDatasetKey]?.description}</p>
-      </div>
-
-      <div style={{ marginBottom: '16px', textAlign: 'left' }}>
-        <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: '#475569', marginBottom: '6px' }}>Click a sample ticket to auto-fill:</label>
-        <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', maxHeight: '140px', overflowY: 'auto', paddingRight: '4px' }}>
-          {TEST_DATASETS[selectedDatasetKey]?.tickets.map((t, idx) => (
-            <button 
-              key={idx} 
-              type="button"
-              onClick={() => setDemoQuery(t)}
-              style={{ textAlign: 'left', padding: '6px 10px', fontSize: '11px', borderRadius: '8px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#334155', cursor: 'pointer' }}
-            >
-              "{t}"
-            </button>
-          ))}
-        </div>
-      </div>
-
-      <form onSubmit={(event) => { event.preventDefault(); addDemoTicket(demoQuery) }} style={{ textAlign: 'left' }}>
-        <label htmlFor="demo-query" style={{ fontSize: '11px', fontWeight: 700, color: '#475569' }}>Or Submit Single Custom Ticket</label>
-        <textarea id="demo-query" value={demoQuery} onChange={(event) => setDemoQuery(event.target.value)} placeholder="e.g. Where is my latest order?" style={{ minHeight: '60px' }} />
-        <div className="demo-dialog-actions" style={{ marginTop: '12px', display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
-          <button className="text-button" type="button" onClick={() => setDemoDialogOpen(false)}>Cancel</button>
-          <button className="demo-submit" type="button" onClick={runFullDatasetTest} disabled={isLoadingDataset} style={{ background: 'linear-gradient(135deg, #4f46e5, #6366f1)', color: '#ffffff', fontWeight: 700 }}>
-            {isLoadingDataset ? '⚡ Running Test...' : '⚡ Classify & Run Entire Dataset Test'}
-          </button>
-          <button className="demo-submit" type="submit" disabled={!demoQuery.trim()}>Classify Single Query</button>
-        </div>
-      </form>
-    </div>
-  </div>
-)}
             </div>
             <button className="hero-visual" type="button" aria-label="Open Lucent chat assistant" onClick={() => setChatOpen(true)}>
               <div className="orbit orbit-a" aria-hidden="true" />
@@ -647,61 +620,6 @@ export default function Page() {
               <div className="lucent-logo" aria-hidden="true"><span>L</span></div>
             </button>
           </section>
-
-          {chatOpen && (
-            <div className="chat-dialog-backdrop" role="presentation" onMouseDown={() => setChatOpen(false)}>
-              <section className="chat-dialog" role="dialog" aria-modal="true" aria-labelledby="chat-dialog-title" onMouseDown={(event) => event.stopPropagation()} style={{ width: 'min(92%, 520px)', padding: '24px', borderRadius: '24px', background: '#ffffff', border: '1px solid rgba(199,210,254,0.8)', boxShadow: '0 25px 70px rgba(99,102,241,0.25)', display: 'flex', flexDirection: 'column', maxHeight: '85vh' }}>
-                <button className="demo-dialog-close" type="button" aria-label="Close Lucent chat" onClick={() => setChatOpen(false)}><X /></button>
-                <p className="eyebrow" style={{ color: '#4f46e5', fontWeight: 700 }}>Lucent Assistant & Website Guide</p>
-                <h3 id="chat-dialog-title" style={{ margin: '2px 0 10px', fontSize: '20px' }}>How can I help you navigate or resolve issues?</h3>
-                
-                {/* Quick Predefined Questions Chips */}
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '12px' }}>
-                  {PREDEFINED_QUESTIONS.map((q) => (
-                    <button
-                      key={q}
-                      type="button"
-                      onClick={() => submitCustomQuery(q)}
-                      disabled={chatIsTyping}
-                      style={{
-                        padding: '5px 11px',
-                        borderRadius: '16px',
-                        background: '#eef2ff',
-                        border: '1px solid #c7d2fe',
-                        color: '#3730a3',
-                        fontSize: '11px',
-                        fontWeight: 600,
-                        cursor: 'pointer',
-                        transition: 'all 0.15s ease',
-                      }}
-                    >
-                      {q}
-                    </button>
-                  ))}
-                </div>
-
-                <div className="chat-messages" aria-live="polite" style={{ flex: 1, overflowY: 'auto', marginBottom: '12px' }}>
-                  {chatMessages.map((message, index) => (
-                    <div className={`chat-message ${message.role}`} key={`${message.role}-${index}`} style={{ whiteSpace: 'pre-wrap', lineHeight: '1.45' }}>
-                      {message.role === 'assistant' ? renderMessageContent(message.text) : message.text}
-                    </div>
-                  ))}
-                  {chatIsTyping && <div className="chat-message assistant" style={{ opacity: 0.6, fontStyle: 'italic' }}>Lucent is typing...</div>}
-                  {chatGuide.length > 0 && (
-                    <div className="chat-guide">
-                      <p className="eyebrow">Suggested next steps</p>
-                      <ol>{chatGuide.map((step) => <li key={step}>{step}</li>)}</ol>
-                    </div>
-                  )}
-                </div>
-
-                <form className="chat-form" onSubmit={sendChatQuery}>
-                  <input value={chatQuery} onChange={(event) => setChatQuery(event.target.value)} placeholder="Type your query or click a quick question..." aria-label="Your query" />
-                  <button className="demo-submit" type="submit" disabled={!chatQuery.trim() || chatIsTyping}>Send</button>
-                </form>
-              </section>
-            </div>
-          )}
 
           <div className="stats-grid"><StatCard label="Open tickets" value="128" delta="12.5%" icon={Inbox} /><StatCard label="Avg. response time" value="14m" delta="8.2%" icon={Clock3} positive /><StatCard label="Resolution rate" value="86.4%" delta="4.8%" icon={Sparkles} positive /></div>
 
@@ -753,12 +671,190 @@ export default function Page() {
         </div>
       )}
 
+      {/* Test Support System & Dataset Selector Modal */}
+      {demoDialogOpen && (
+        <div
+          className="demo-dialog-backdrop"
+          role="presentation"
+          onMouseDown={() => setDemoDialogOpen(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 20000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+            background: 'rgba(15, 23, 42, 0.65)',
+            backdropFilter: 'blur(12px)',
+            WebkitBackdropFilter: 'blur(12px)',
+            isolation: 'isolate'
+          }}
+        >
+          <div
+            className="demo-dialog glass-panel"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="demo-dialog-title"
+            style={{ width: 'min(92%, 500px)', padding: '26px', borderRadius: '24px', background: '#ffffff', color: '#0f172a', border: '1px solid rgba(199,210,254,0.9)', boxShadow: '0 25px 70px rgba(0,0,0,0.35)' }}
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <button className="demo-dialog-close" type="button" aria-label="Close" onClick={() => setDemoDialogOpen(false)}><X /></button>
+            <p className="eyebrow" style={{ color: '#4f46e5', fontWeight: 700 }}>Test Support System & Dataset Selector</p>
+            <h3 id="demo-dialog-title" style={{ margin: '4px 0 10px', fontSize: '22px', color: '#0f172a' }}>Test Support System</h3>
+
+            <div style={{ marginBottom: '14px', textAlign: 'left' }}>
+              <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: '#475569', marginBottom: '5px' }}>Select Industry Test Dataset</label>
+              <select 
+                value={selectedDatasetKey} 
+                onChange={(e) => setSelectedDatasetKey(e.target.value)}
+                style={{ width: '100%', padding: '9px 12px', borderRadius: '12px', border: '1px solid #cbd5e1', background: '#ffffff', color: '#0f172a', fontSize: '12px', fontWeight: 600, outline: 'none' }}
+              >
+                {Object.entries(TEST_DATASETS).map(([key, ds]) => (
+                  <option key={key} value={key}>{ds.name}</option>
+                ))}
+              </select>
+              <p style={{ margin: '4px 0 0', fontSize: '10px', color: '#64748b' }}>{TEST_DATASETS[selectedDatasetKey]?.description}</p>
+            </div>
+
+            <div style={{ marginBottom: '16px', textAlign: 'left' }}>
+              <label style={{ display: 'block', fontSize: '11px', fontWeight: 700, color: '#475569', marginBottom: '6px' }}>Click a sample ticket to auto-fill:</label>
+              <div style={{ display: 'flex', flexDirection: 'column', gap: '5px', maxHeight: '140px', overflowY: 'auto', paddingRight: '4px' }}>
+                {TEST_DATASETS[selectedDatasetKey]?.tickets.map((t, idx) => (
+                  <button 
+                    key={idx} 
+                    type="button"
+                    onClick={() => setDemoQuery(t)}
+                    style={{ textAlign: 'left', padding: '6px 10px', fontSize: '11px', borderRadius: '8px', border: '1px solid #e2e8f0', background: '#f8fafc', color: '#334155', cursor: 'pointer' }}
+                  >
+                    "{t}"
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            <form onSubmit={(event) => { event.preventDefault(); addDemoTicket(demoQuery) }} style={{ textAlign: 'left' }}>
+              <label htmlFor="demo-query" style={{ fontSize: '11px', fontWeight: 700, color: '#475569' }}>Or Submit Single Custom Ticket</label>
+              <textarea id="demo-query" value={demoQuery} onChange={(event) => setDemoQuery(event.target.value)} placeholder="e.g. Where is my latest order?" style={{ minHeight: '60px', width: '100%', padding: '10px', borderRadius: '12px', border: '1px solid #cbd5e1' }} />
+              <div className="demo-dialog-actions" style={{ marginTop: '12px', display: 'flex', gap: '8px', flexWrap: 'wrap', justifyContent: 'flex-end' }}>
+                <button className="text-button" type="button" onClick={() => setDemoDialogOpen(false)}>Cancel</button>
+                <button className="demo-submit" type="button" onClick={runFullDatasetTest} disabled={isLoadingDataset} style={{ background: 'linear-gradient(135deg, #4f46e5, #6366f1)', color: '#ffffff', fontWeight: 700, padding: '10px 16px', borderRadius: '12px', border: 'none' }}>
+                  {isLoadingDataset ? '⚡ Running Test...' : '⚡ Classify & Run Entire Dataset Test'}
+                </button>
+                <button className="demo-submit" type="submit" disabled={!demoQuery.trim()} style={{ padding: '10px 16px', borderRadius: '12px' }}>Classify Single Query</button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
       {/* Mock Customer Website Demo Modal */}
       {demoMode && (
         <MockStorefrontModal
           onClose={() => setDemoMode(false)}
           onAddTicket={handleMockStorefrontTicket}
+          onOpenTestSuite={() => setDemoDialogOpen(true)}
         />
+      )}
+
+      {/* Lucent AI Assistant Top-Level Floating Modal */}
+      {chatOpen && (
+        <div
+          className="chat-dialog-backdrop"
+          role="presentation"
+          onMouseDown={() => setChatOpen(false)}
+          style={{
+            position: 'fixed',
+            inset: 0,
+            zIndex: 10000,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '20px',
+            background: 'rgba(15, 23, 42, 0.45)',
+            backdropFilter: 'blur(8px)',
+            WebkitBackdropFilter: 'blur(8px)',
+            isolation: 'isolate'
+          }}
+        >
+          <section
+            className="chat-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="chat-dialog-title"
+            onMouseDown={(event) => event.stopPropagation()}
+            style={{
+              position: 'relative',
+              width: 'min(92%, 520px)',
+              height: 'min(540px, 85vh)',
+              padding: '24px',
+              borderRadius: '24px',
+              background: '#ffffff',
+              border: '1px solid rgba(199,210,254,0.9)',
+              boxShadow: '0 25px 70px rgba(0,0,0,0.3)',
+              display: 'flex',
+              flexDirection: 'column',
+              overflow: 'hidden'
+            }}
+          >
+            <button className="demo-dialog-close" type="button" aria-label="Close Lucent chat" onClick={() => setChatOpen(false)}><X /></button>
+            <p className="eyebrow" style={{ color: '#4f46e5', fontWeight: 700 }}>Lucent Assistant & Website Guide</p>
+            <h3 id="chat-dialog-title" style={{ margin: '2px 0 10px', fontSize: '20px' }}>How can I help you navigate or resolve issues?</h3>
+            
+            {/* Quick Predefined Questions Chips */}
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '6px', marginBottom: '12px', maxHeight: '90px', overflowY: 'auto' }}>
+              {PREDEFINED_QUESTIONS.map((q) => (
+                <button
+                  key={q}
+                  type="button"
+                  onClick={() => submitCustomQuery(q)}
+                  disabled={chatIsTyping}
+                  style={{
+                    padding: '5px 11px',
+                    borderRadius: '16px',
+                    background: '#eef2ff',
+                    border: '1px solid #c7d2fe',
+                    color: '#3730a3',
+                    fontSize: '11px',
+                    fontWeight: 600,
+                    cursor: 'pointer',
+                    transition: 'all 0.15s ease',
+                  }}
+                >
+                  {q}
+                </button>
+              ))}
+            </div>
+
+            <div className="chat-messages" aria-live="polite" style={{ flex: 1, overflowY: 'auto', marginBottom: '12px', padding: '12px', background: '#f8fafc', borderRadius: '16px' }}>
+              {chatMessages.map((message, index) => (
+                <div className={`chat-message ${message.role}`} key={`${message.role}-${index}`} style={{ whiteSpace: 'pre-wrap', lineHeight: '1.45' }}>
+                  {message.role === 'assistant' ? renderMessageContent(message.text) : message.text}
+                </div>
+              ))}
+              {chatIsTyping && <div className="chat-message assistant" style={{ opacity: 0.6, fontStyle: 'italic' }}>Lucent is typing...</div>}
+              {chatGuide.length > 0 && (
+                <div className="chat-guide">
+                  <p className="eyebrow">Suggested next steps</p>
+                  <ol>{chatGuide.map((step) => <li key={step}>{step}</li>)}</ol>
+                </div>
+              )}
+            </div>
+
+            <form className="chat-form" onSubmit={sendChatQuery} style={{ display: 'flex', gap: '8px', paddingTop: '8px', borderTop: '1px solid #e2e8f0' }}>
+              <input
+                value={chatQuery}
+                onChange={(event) => setChatQuery(event.target.value)}
+                placeholder="Type your query or click a quick question..."
+                aria-label="Your query"
+                style={{ flex: 1, padding: '10px 14px', borderRadius: '14px', border: '1px solid #cbd5e1', outline: 'none', fontSize: '12px' }}
+              />
+              <button className="demo-submit" type="submit" disabled={!chatQuery.trim() || chatIsTyping} style={{ padding: '10px 16px', borderRadius: '14px' }}>
+                Send
+              </button>
+            </form>
+          </section>
+        </div>
       )}
 
     </main>
@@ -1114,10 +1210,12 @@ function Legend({ label, value, color }: { label: string; value: string; color: 
 
 function MockStorefrontModal({
   onClose,
-  onAddTicket
+  onAddTicket,
+  onOpenTestSuite
 }: {
   onClose: () => void
   onAddTicket: (msg: string) => Promise<any>
+  onOpenTestSuite?: () => void
 }) {
   const [activeTab, setActiveTab] = useState<'shop' | 'support_form' | 'my_tickets'>('shop')
   const [chatOpen, setChatOpen] = useState(true)
@@ -1194,17 +1292,17 @@ function MockStorefrontModal({
   ]
 
   return (
-    <div className="action-dialog-backdrop" role="presentation" style={{ background: 'rgba(15, 23, 42, 0.75)', backdropFilter: 'blur(16px)', zIndex: 9999, padding: '16px' }} onMouseDown={onClose}>
+    <div className="action-dialog-backdrop" role="presentation" style={{ background: 'rgba(15, 23, 42, 0.65)', backdropFilter: 'blur(16px)', zIndex: 9999, padding: '16px' }} onMouseDown={onClose}>
       <div
         className="mock-storefront-dialog"
         style={{
           width: 'min(98%, 1160px)',
           height: 'min(94vh, 840px)',
-          borderRadius: '24px',
-          background: '#f8fafc',
+          borderRadius: '28px',
+          background: 'linear-gradient(125deg, #ed7753 0%, #f19d82 25%, #cb9cd3 70%, #996ea5 100%)',
           color: '#0f172a',
-          border: '1px solid rgba(199,210,254,0.9)',
-          boxShadow: '0 30px 100px rgba(0,0,0,0.3)',
+          border: '1px solid rgba(255, 255, 255, 0.8)',
+          boxShadow: '0 30px 100px rgba(0,0,0,0.35)',
           display: 'flex',
           flexDirection: 'column',
           overflow: 'hidden',
@@ -1213,14 +1311,14 @@ function MockStorefrontModal({
         onMouseDown={(e) => e.stopPropagation()}
       >
         {/* Browser Top URL Bar */}
-        <div style={{ background: '#1e293b', padding: '9px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid #334155' }}>
+        <div style={{ background: 'rgba(30, 27, 75, 0.85)', backdropFilter: 'blur(20px)', padding: '9px 18px', display: 'flex', alignItems: 'center', justifyContent: 'space-between', borderBottom: '1px solid rgba(255,255,255,0.2)' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#ef4444' }} />
             <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#f59e0b' }} />
             <span style={{ width: '12px', height: '12px', borderRadius: '50%', background: '#10b981' }} />
           </div>
 
-          <div style={{ background: '#0f172a', padding: '5px 18px', borderRadius: '20px', border: '1px solid #334155', color: '#94a3b8', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '8px', width: 'min(100%, 500px)' }}>
+          <div style={{ background: 'rgba(15, 23, 42, 0.6)', padding: '5px 18px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.2)', color: '#94a3b8', fontSize: '11px', display: 'flex', alignItems: 'center', gap: '8px', width: 'min(100%, 500px)' }}>
             <span style={{ color: '#10b981' }}>🔒</span>
             <strong style={{ color: '#e2e8f0' }}>https://nexus-store.com/customer-portal</strong>
             <span style={{ marginLeft: 'auto', fontSize: '9px', background: '#4f46e5', color: '#fff', padding: '2px 8px', borderRadius: '8px', fontWeight: 800 }}>LIVE DEMO</span>
@@ -1253,12 +1351,12 @@ function MockStorefrontModal({
           <span style={{ background: 'rgba(255,255,255,0.25)', padding: '2px 10px', borderRadius: '10px', fontSize: '10px', fontWeight: 800 }}>Synced to FastAPI Backend</span>
         </div>
 
-        {/* Storefront Navigation Header */}
-        <header style={{ background: '#ffffff', padding: '14px 28px', borderBottom: '1px solid #e2e8f0', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        {/* Storefront Navigation Header (Qunexa Glass Theme) */}
+        <header style={{ background: 'rgba(255, 255, 255, 0.45)', backdropFilter: 'blur(24px)', padding: '14px 28px', borderBottom: '1px solid rgba(255, 255, 255, 0.6)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '12px', cursor: 'pointer' }} onClick={() => setActiveTab('shop')}>
             <div style={{ width: '38px', height: '38px', borderRadius: '12px', background: 'linear-gradient(135deg, #4f46e5, #6366f1)', color: '#fff', display: 'flex', alignItems: 'center', justifyContent: 'center', fontWeight: 900, fontSize: '18px', boxShadow: '0 4px 14px rgba(79,70,229,0.35)' }}>N</div>
             <div style={{ textAlign: 'left' }}>
-              <h3 style={{ margin: 0, fontSize: '17px', fontWeight: 900, letterSpacing: '-0.02em', color: '#0f172a' }}>NEXUS GLOBAL STORE</h3>
+              <h3 style={{ margin: 0, fontSize: '17px', fontWeight: 900, letterSpacing: '-0.02em', color: '#1e1b4b' }}>NEXUS GLOBAL STORE</h3>
               <span style={{ fontSize: '10px', color: '#4f46e5', fontWeight: 700 }}>Next-Gen Retail & Support Portal</span>
             </div>
           </div>
@@ -1271,11 +1369,12 @@ function MockStorefrontModal({
               style={{
                 padding: '6px 14px',
                 borderRadius: '12px',
-                background: activeTab === 'shop' ? '#eef2ff' : 'transparent',
-                color: activeTab === 'shop' ? '#4f46e5' : '#475569',
-                border: 'none',
+                background: activeTab === 'shop' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0.25)',
+                color: activeTab === 'shop' ? '#4f46e5' : '#334155',
+                border: activeTab === 'shop' ? '1px solid rgba(255, 255, 255, 0.9)' : '1px solid rgba(255, 255, 255, 0.4)',
                 cursor: 'pointer',
-                fontWeight: 700
+                fontWeight: 700,
+                boxShadow: activeTab === 'shop' ? '0 4px 14px rgba(79,70,229,0.15)' : 'none'
               }}
             >
               🛍️ Storefront Catalog
@@ -1286,11 +1385,12 @@ function MockStorefrontModal({
               style={{
                 padding: '6px 14px',
                 borderRadius: '12px',
-                background: activeTab === 'support_form' ? '#eef2ff' : 'transparent',
-                color: activeTab === 'support_form' ? '#4f46e5' : '#475569',
-                border: 'none',
+                background: activeTab === 'support_form' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0.25)',
+                color: activeTab === 'support_form' ? '#4f46e5' : '#334155',
+                border: activeTab === 'support_form' ? '1px solid rgba(255, 255, 255, 0.9)' : '1px solid rgba(255, 255, 255, 0.4)',
                 cursor: 'pointer',
-                fontWeight: 700
+                fontWeight: 700,
+                boxShadow: activeTab === 'support_form' ? '0 4px 14px rgba(79,70,229,0.15)' : 'none'
               }}
             >
               🎟️ Submit Support Ticket
@@ -1301,24 +1401,41 @@ function MockStorefrontModal({
               style={{
                 padding: '6px 14px',
                 borderRadius: '12px',
-                background: activeTab === 'my_tickets' ? '#eef2ff' : 'transparent',
-                color: activeTab === 'my_tickets' ? '#4f46e5' : '#475569',
-                border: 'none',
+                background: activeTab === 'my_tickets' ? 'rgba(255, 255, 255, 0.85)' : 'rgba(255, 255, 255, 0.25)',
+                color: activeTab === 'my_tickets' ? '#4f46e5' : '#334155',
+                border: activeTab === 'my_tickets' ? '1px solid rgba(255, 255, 255, 0.9)' : '1px solid rgba(255, 255, 255, 0.4)',
                 cursor: 'pointer',
-                fontWeight: 700
+                fontWeight: 700,
+                boxShadow: activeTab === 'my_tickets' ? '0 4px 14px rgba(79,70,229,0.15)' : 'none'
               }}
             >
               📋 My Tracked Tickets ({submittedTickets.length})
             </button>
+            <button
+              type="button"
+              onClick={() => onOpenTestSuite?.()}
+              style={{
+                padding: '6px 14px',
+                borderRadius: '12px',
+                background: 'linear-gradient(135deg, #4f46e5, #6366f1)',
+                color: '#ffffff',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: 800,
+                boxShadow: '0 4px 14px rgba(79,70,229,0.25)'
+              }}
+            >
+              🧪 Test Support System
+            </button>
           </nav>
 
           <div style={{ display: 'flex', alignItems: 'center', gap: '10px' }}>
-            <span style={{ fontSize: '11px', fontWeight: 700, color: '#334155', background: '#f1f5f9', padding: '6px 14px', borderRadius: '20px', border: '1px solid #cbd5e1' }}>🛒 Cart (2)</span>
+            <span style={{ fontSize: '11px', fontWeight: 700, color: '#312e81', background: 'rgba(255,255,255,0.65)', padding: '6px 14px', borderRadius: '20px', border: '1px solid rgba(255,255,255,0.85)' }}>🛒 Cart (2)</span>
           </div>
         </header>
 
-        {/* Storefront Main View Container (Light Theme & Glassmorphism Blur) */}
-        <div style={{ flex: 1, overflowY: 'auto', background: 'linear-gradient(180deg, #eaeded 0%, #f8fafc 100%)', color: '#0f172a', display: 'flex', flexDirection: 'column' }}>
+        {/* Storefront Main View Container (Warm Qunexa Glassmorphism Gradient) */}
+        <div style={{ flex: 1, overflowY: 'auto', background: 'transparent', color: '#0f172a', display: 'flex', flexDirection: 'column' }}>
 
           {/* Alert Banner for Newly Submitted Ticket */}
           {lastSubmittedTicket && (
@@ -1343,74 +1460,92 @@ function MockStorefrontModal({
                   <p style={{ margin: 0, color: '#c7d2fe', fontSize: '12px' }}>Fast 1-2 day express shipping on all orders. Lucent AI Assistant is ready to help below!</p>
                 </div>
                 <div style={{ display: 'flex', gap: '10px' }}>
+                  <button type="button" onClick={() => onOpenTestSuite?.()} style={{ padding: '10px 18px', borderRadius: '14px', background: 'rgba(255,255,255,0.2)', color: '#fff', fontSize: '12px', fontWeight: 900, border: '1px solid rgba(255,255,255,0.4)', cursor: 'pointer' }}>
+                    🧪 Test Support System
+                  </button>
                   <button type="button" onClick={() => setActiveTab('support_form')} style={{ padding: '10px 18px', borderRadius: '14px', background: 'linear-gradient(135deg, #4f46e5, #6366f1)', color: '#fff', fontSize: '12px', fontWeight: 900, border: 'none', cursor: 'pointer', boxShadow: '0 4px 14px rgba(79,70,229,0.4)' }}>
                     🎟️ Open Support Ticket
                   </button>
                 </div>
               </div>
 
-              {/* Product Cards & Test Scenario Quick Options */}
-              <div style={{ padding: '0 28px 28px', display: 'grid', gridTemplateColumns: '2fr 1fr', gap: '20px' }}>
-                <div>
-                  <h4 style={{ margin: '0 0 12px', fontSize: '14px', fontWeight: 800, color: '#334155', textAlign: 'left' }}>Featured Store Products</h4>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '14px' }}>
-                    
-                    {/* Product Card 1 */}
-                    <div style={{ padding: '16px', borderRadius: '18px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', textAlign: 'left', boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
-                      <div style={{ height: '95px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '38px' }}>🎧</div>
-                      <span style={{ fontSize: '10px', color: '#166534', background: '#dcfce7', padding: '2px 8px', borderRadius: '6px', fontWeight: 800, marginTop: '8px', display: 'inline-block' }}>⚡ In Stock (Express Shipping)</span>
-                      <strong style={{ display: 'block', margin: '4px 0 2px', fontSize: '13px', color: '#0f172a' }}>Sony WH-1000XM5 Wireless Headphones</strong>
-                      <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '4px' }}>⭐⭐⭐⭐⭐ <small style={{ color: '#64748b' }}>(12,450)</small></div>
-                      <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '15px' }}>$348.00</span>
-                      <button type="button" onClick={() => handleSend("I was charged twice on my credit card for the Sony Headphones")} style={{ marginTop: '10px', width: '100%', padding: '7px 10px', borderRadius: '10px', border: '1px solid #cbd5e1', background: '#f8fafc', fontSize: '10px', fontWeight: 700, color: '#334155', cursor: 'pointer' }}>
-                        💳 Report Double Charge Issue
-                      </button>
-                    </div>
-
-                    {/* Product Card 2 */}
-                    <div style={{ padding: '16px', borderRadius: '18px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', textAlign: 'left', boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
-                      <div style={{ height: '95px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '38px' }}>💻</div>
-                      <span style={{ fontSize: '10px', color: '#166534', background: '#dcfce7', padding: '2px 8px', borderRadius: '6px', fontWeight: 800, marginTop: '8px', display: 'inline-block' }}>⚡ In Stock</span>
-                      <strong style={{ display: 'block', margin: '4px 0 2px', fontSize: '13px', color: '#0f172a' }}>Apple MacBook Air 15" M3 (512GB)</strong>
-                      <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '4px' }}>⭐⭐⭐⭐⭐ <small style={{ color: '#64748b' }}>(8,920)</small></div>
-                      <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '15px' }}>$1,299.00</span>
-                      <button type="button" onClick={() => handleSend("My order #NX-99812 for MacBook Air has not arrived yet")} style={{ marginTop: '10px', width: '100%', padding: '7px 10px', borderRadius: '10px', border: '1px solid #c7d2fe', background: '#eef2ff', fontSize: '10px', fontWeight: 700, color: '#3730a3', cursor: 'pointer' }}>
-                        📦 Track Delivery Status
-                      </button>
-                    </div>
-
+              {/* Product Cards Container */}
+              <div style={{ padding: '0 28px 28px' }}>
+                <h4 style={{ margin: '0 0 12px', fontSize: '14px', fontWeight: 800, color: '#334155', textAlign: 'left' }}>Featured Store Products</h4>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: '16px' }}>
+                  
+                  {/* Product Card 1 */}
+                  <div style={{ padding: '16px', borderRadius: '18px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', textAlign: 'left', boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
+                    <div style={{ height: '95px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '38px' }}>🎧</div>
+                    <span style={{ fontSize: '10px', color: '#166534', background: '#dcfce7', padding: '2px 8px', borderRadius: '6px', fontWeight: 800, marginTop: '8px', display: 'inline-block' }}>⚡ In Stock (Express Shipping)</span>
+                    <strong style={{ display: 'block', margin: '4px 0 2px', fontSize: '13px', color: '#0f172a' }}>Sony WH-1000XM5 Wireless Headphones</strong>
+                    <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '4px' }}>⭐⭐⭐⭐⭐ <small style={{ color: '#64748b' }}>(12,450)</small></div>
+                    <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '15px' }}>$348.00</span>
+                    <button type="button" onClick={() => handleSend("I was charged twice on my credit card for the Sony Headphones")} style={{ marginTop: '10px', width: '100%', padding: '7px 10px', borderRadius: '10px', border: '1px solid #cbd5e1', background: '#f8fafc', fontSize: '10px', fontWeight: 700, color: '#334155', cursor: 'pointer' }}>
+                      💳 Report Double Charge Issue
+                    </button>
                   </div>
-                </div>
 
-                {/* Customer Test Scenarios Box */}
-                <div style={{ padding: '18px', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', borderRadius: '20px', border: '1px solid rgba(199,210,254,0.9)', textAlign: 'left', boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
-                  <strong style={{ fontSize: '11px', textTransform: 'uppercase', letterSpacing: '0.08em', color: '#3730a3', display: 'block', marginBottom: '6px' }}>
-                    🧪 Quick Customer Scenario Test
-                  </strong>
-                  <p style={{ margin: '0 0 10px', fontSize: '11px', color: '#64748b' }}>Click any sample ticket to simulate real customer input on the store:</p>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '6px' }}>
-                    {sampleCustomerQueries.map((q, idx) => (
-                      <button
-                        key={idx}
-                        type="button"
-                        onClick={() => handleSend(q)}
-                        style={{
-                          padding: '9px 11px',
-                          borderRadius: '12px',
-                          border: '1px solid #e2e8f0',
-                          background: '#ffffff',
-                          color: '#1e293b',
-                          fontSize: '11px',
-                          fontWeight: 600,
-                          textAlign: 'left',
-                          cursor: 'pointer',
-                          boxShadow: '0 2px 4px rgba(0,0,0,0.02)'
-                        }}
-                      >
-                        💬 "{q}"
-                      </button>
-                    ))}
+                  {/* Product Card 2 */}
+                  <div style={{ padding: '16px', borderRadius: '18px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', textAlign: 'left', boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
+                    <div style={{ height: '95px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '38px' }}>💻</div>
+                    <span style={{ fontSize: '10px', color: '#166534', background: '#dcfce7', padding: '2px 8px', borderRadius: '6px', fontWeight: 800, marginTop: '8px', display: 'inline-block' }}>⚡ In Stock</span>
+                    <strong style={{ display: 'block', margin: '4px 0 2px', fontSize: '13px', color: '#0f172a' }}>Apple MacBook Air 15" M3 (512GB)</strong>
+                    <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '4px' }}>⭐⭐⭐⭐⭐ <small style={{ color: '#64748b' }}>(8,920)</small></div>
+                    <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '15px' }}>$1,299.00</span>
+                    <button type="button" onClick={() => handleSend("My order #NX-99812 for MacBook Air has not arrived yet")} style={{ marginTop: '10px', width: '100%', padding: '7px 10px', borderRadius: '10px', border: '1px solid #c7d2fe', background: '#eef2ff', fontSize: '10px', fontWeight: 700, color: '#3730a3', cursor: 'pointer' }}>
+                      📦 Track Delivery Status
+                    </button>
                   </div>
+
+                  {/* Product Card 3 */}
+                  <div style={{ padding: '16px', borderRadius: '18px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', textAlign: 'left', boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
+                    <div style={{ height: '95px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '38px' }}>📱</div>
+                    <span style={{ fontSize: '10px', color: '#166534', background: '#dcfce7', padding: '2px 8px', borderRadius: '6px', fontWeight: 800, marginTop: '8px', display: 'inline-block' }}>⚡ In Stock</span>
+                    <strong style={{ display: 'block', margin: '4px 0 2px', fontSize: '13px', color: '#0f172a' }}>Samsung Galaxy S24 Ultra (512GB)</strong>
+                    <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '4px' }}>⭐⭐⭐⭐⭐ <small style={{ color: '#64748b' }}>(6,410)</small></div>
+                    <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '15px' }}>$1,199.00</span>
+                    <button type="button" onClick={() => handleSend("My order #NX-88210 for Samsung S24 has not arrived yet, tracking has not updated in 4 days")} style={{ marginTop: '10px', width: '100%', padding: '7px 10px', borderRadius: '10px', border: '1px solid #cbd5e1', background: '#f8fafc', fontSize: '10px', fontWeight: 700, color: '#334155', cursor: 'pointer' }}>
+                      🚚 Report Shipping Delay
+                    </button>
+                  </div>
+
+                  {/* Product Card 4 */}
+                  <div style={{ padding: '16px', borderRadius: '18px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', textAlign: 'left', boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
+                    <div style={{ height: '95px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '38px' }}>🎮</div>
+                    <span style={{ fontSize: '10px', color: '#9a3412', background: '#ffedd5', padding: '2px 8px', borderRadius: '6px', fontWeight: 800, marginTop: '8px', display: 'inline-block' }}>🔥 High Demand</span>
+                    <strong style={{ display: 'block', margin: '4px 0 2px', fontSize: '13px', color: '#0f172a' }}>Sony PlayStation 5 Pro Console</strong>
+                    <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '4px' }}>⭐⭐⭐⭐⭐ <small style={{ color: '#64748b' }}>(15,800)</small></div>
+                    <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '15px' }}>$699.00</span>
+                    <button type="button" onClick={() => handleSend("The checkout payment gateway returned error 500 when attempting PS5 payment")} style={{ marginTop: '10px', width: '100%', padding: '7px 10px', borderRadius: '10px', border: '1px solid #fca5a5', background: '#fef2f2', fontSize: '10px', fontWeight: 700, color: '#dc2626', cursor: 'pointer' }}>
+                      ⚠️ Report Payment Gateway 500 Error
+                    </button>
+                  </div>
+
+                  {/* Product Card 5 */}
+                  <div style={{ padding: '16px', borderRadius: '18px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', textAlign: 'left', boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
+                    <div style={{ height: '95px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '38px' }}>🖥️</div>
+                    <span style={{ fontSize: '10px', color: '#166534', background: '#dcfce7', padding: '2px 8px', borderRadius: '6px', fontWeight: 800, marginTop: '8px', display: 'inline-block' }}>⚡ In Stock</span>
+                    <strong style={{ display: 'block', margin: '4px 0 2px', fontSize: '13px', color: '#0f172a' }}>Dell XPS 16 OLED Laptop (64GB RAM)</strong>
+                    <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '4px' }}>⭐⭐⭐⭐⭐ <small style={{ color: '#64748b' }}>(3,120)</small></div>
+                    <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '15px' }}>$1,899.00</span>
+                    <button type="button" onClick={() => handleSend("I received a damaged laptop package and need to print a return shipping label")} style={{ marginTop: '10px', width: '100%', padding: '7px 10px', borderRadius: '10px', border: '1px solid #cbd5e1', background: '#f8fafc', fontSize: '10px', fontWeight: 700, color: '#334155', cursor: 'pointer' }}>
+                      🏷️ Request Damaged Item Return Label
+                    </button>
+                  </div>
+
+                  {/* Product Card 6 */}
+                  <div style={{ padding: '16px', borderRadius: '18px', border: '1px solid rgba(199,210,254,0.8)', background: 'rgba(255,255,255,0.9)', backdropFilter: 'blur(12px)', textAlign: 'left', boxShadow: '0 8px 24px rgba(0,0,0,0.04)' }}>
+                    <div style={{ height: '95px', borderRadius: '12px', background: '#f1f5f9', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: '38px' }}>⌚</div>
+                    <span style={{ fontSize: '10px', color: '#166534', background: '#dcfce7', padding: '2px 8px', borderRadius: '6px', fontWeight: 800, marginTop: '8px', display: 'inline-block' }}>⚡ In Stock</span>
+                    <strong style={{ display: 'block', margin: '4px 0 2px', fontSize: '13px', color: '#0f172a' }}>Apple Watch Ultra 2 Titanium</strong>
+                    <div style={{ fontSize: '11px', color: '#f59e0b', marginBottom: '4px' }}>⭐⭐⭐⭐⭐ <small style={{ color: '#64748b' }}>(7,490)</small></div>
+                    <span style={{ color: '#4f46e5', fontWeight: 900, fontSize: '15px' }}>$799.00</span>
+                    <button type="button" onClick={() => handleSend("My 20% promo code SAVE20 is not applying at checkout for Apple Watch")} style={{ marginTop: '10px', width: '100%', padding: '7px 10px', borderRadius: '10px', border: '1px solid #c7d2fe', background: '#eef2ff', fontSize: '10px', fontWeight: 700, color: '#3730a3', cursor: 'pointer' }}>
+                      🎟️ Promo Code Not Working Issue
+                    </button>
+                  </div>
+
                 </div>
               </div>
             </>
