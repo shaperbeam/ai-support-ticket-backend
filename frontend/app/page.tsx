@@ -590,21 +590,44 @@ export default function Page() {
                 </button>
               </div>
 
-              <div style={{ marginTop: '16px', display: 'flex', gap: '10px' }}>
+              <div style={{ marginTop: '16px', display: 'flex', gap: '10px', flexWrap: 'wrap', alignItems: 'center' }}>
+                <select 
+                  value={selectedDatasetKey} 
+                  onChange={(e) => setSelectedDatasetKey(e.target.value)}
+                  style={{
+                    padding: '10px 14px',
+                    borderRadius: '16px',
+                    border: '1px solid #c7d2fe',
+                    background: '#ffffff',
+                    color: '#312e81',
+                    fontSize: '12px',
+                    fontWeight: 700,
+                    cursor: 'pointer',
+                    outline: 'none',
+                    boxShadow: '0 4px 14px rgba(99,102,241,0.08)'
+                  }}
+                  title="Select dataset to test"
+                >
+                  {Object.entries(TEST_DATASETS).map(([key, ds]) => (
+                    <option key={key} value={key}>{ds.name}</option>
+                  ))}
+                </select>
+
                 <button
                   type="button"
                   onClick={runFullDatasetTest}
                   disabled={isLoadingDataset}
                   style={{ padding: '10px 20px', borderRadius: '16px', background: 'linear-gradient(135deg, #4f46e5, #6366f1)', color: '#ffffff', fontSize: '12px', fontWeight: 800, border: 'none', cursor: 'pointer', boxShadow: '0 8px 24px rgba(79,70,229,0.35)', display: 'inline-flex', alignItems: 'center', gap: '8px' }}
                 >
-                  {isLoadingDataset ? '⚡ Running Full Dataset Test...' : '⚡ Classify & Run AI Dataset Test'}
+                  {isLoadingDataset ? '⚡ Running Test...' : '⚡ Classify & Run AI Dataset Test'}
                 </button>
+
                 <button
                   type="button"
                   onClick={() => setDemoDialogOpen(true)}
                   style={{ padding: '10px 16px', borderRadius: '16px', background: '#ffffff', color: '#4f46e5', fontSize: '12px', fontWeight: 700, border: '1px solid #c7d2fe', cursor: 'pointer' }}
                 >
-                  🧪 Dataset Selector & Suite
+                  🧪 Test Suite & CSV
                 </button>
               </div>
               {demoDialogOpen && (
