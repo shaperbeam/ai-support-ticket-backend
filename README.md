@@ -1,4 +1,4 @@
-# 🛡️ TROJANOVA AI Support Intelligence
+# 🛡️ TROJANOVA AI Support Ticket support system 
 > **Autonomous, Explainable & Uncertainty-Aware Customer Support Ticket Triage Platform**  
 > *Built for Hackathon Excellence — Combining Neural Classification, Hidden Impact Detection, Incident Clustering & Continuous Human-in-the-Loop Feedback.*
 
